@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+  EMPLOYEE
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  PENDING
+}
+
+enum StrategyStatus {
+  DRAFT
+  RUNNING
+  PAUSED
+  COMPLETED
+}
+
+model User {
+  id           String     @id @default(cuid())
+  name         String
+  email        String     @unique
+  phone        String     @unique
+  passwordHash String
+  role         UserRole   @default(EMPLOYEE)
+  status       UserStatus @default(ACTIVE)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model Strategy {
+  id          String         @id @default(cuid())
+  name        String
+  status      StrategyStatus @default(DRAFT)
+  type        String
+  description String?
+  pnl         Float          @default(0)
+  performance Float          @default(0)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+model Broker {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  credentials Json?
+  connected   Boolean  @default(false)
+  config      Json?
+  createdAt   DateTime @default(now())
+  connectedAt DateTime?
+  updatedAt   DateTime?
+}

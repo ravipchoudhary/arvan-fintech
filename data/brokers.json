@@ -1,0 +1,33 @@
+[
+  {
+    "id": "c6a6b274-79b0-4ff7-a4db-b5e7811669e8",
+    "name": "Test Broker 1786372487941",
+    "slug": "test-broker-1786372487941",
+    "credentials": {
+      "raw": "init-creds"
+    },
+    "connected": false,
+    "config": {
+      "mode": "live",
+      "webhook": ""
+    },
+    "createdAt": "2026-08-10T14:34:48.257Z"
+  },
+  {
+    "id": "4ffcc742-870f-45bb-a3f9-96d778f26a30",
+    "name": "Test Broker 1786372545018",
+    "slug": "test-broker-1786372545018",
+    "credentials": {
+      "apiKey": "key-123",
+      "secret": "secret-xyz"
+    },
+    "connected": true,
+    "config": {
+      "mode": "sandbox",
+      "webhook": "https://example.com/webhook"
+    },
+    "createdAt": "2026-08-10T14:35:45.052Z",
+    "connectedAt": "2026-08-10T14:35:45.713Z",
+    "updatedAt": "2026-08-10T14:35:46.388Z"
+  }
+]
