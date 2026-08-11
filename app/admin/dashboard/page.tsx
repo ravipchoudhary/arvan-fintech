@@ -20,24 +20,24 @@ export default async function AdminDashboardPage() {
 
   return (
     <AppShell title="Admin Dashboard" subtitle="Company overview">
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         <Metric label="Users" value={totalUsers.toString()} />
         <Metric label="Strategies" value={totalStrategies.toString()} />
         <Metric label="Connected brokers" value={connectedBrokers.toString()} />
         <Metric label="Running strategies" value={runningStrategies.toString()} />
       </div>
 
-      <div className="mt-6 grid gap-6 xl:grid-cols-2">
-        <div className="card p-5">
-          <h3 className="text-lg font-bold text-slate-900">Strategy health</h3>
-          <div className="mt-4">
+      <div className="mt-8 sm:mt-10 lg:mt-12 grid gap-6 lg:grid-cols-2">
+        <div className="card p-4 sm:p-5 lg:p-6">
+          <h3 className="text-base sm:text-lg font-bold text-slate-900">Strategy health</h3>
+          <div className="mt-4 sm:mt-6">
             <SalesBarChart data={chartData} />
           </div>
         </div>
 
-        <div className="card p-5">
-          <h3 className="text-lg font-bold text-slate-900">Team coverage</h3>
-          <div className="mt-5 space-y-3 text-sm text-slate-700">
+        <div className="card p-4 sm:p-5 lg:p-6">
+          <h3 className="text-base sm:text-lg font-bold text-slate-900">Team coverage</h3>
+          <div className="mt-4 sm:mt-5 space-y-2 sm:space-y-3 text-xs sm:text-sm text-slate-700">
             <Stat label="Platform users" value={totalUsers.toString()} />
             <Stat label="Connected brokers" value={connectedBrokers.toString()} />
             <Stat label="Monitoring strategies" value={totalStrategies.toString()} />
@@ -51,8 +51,8 @@ export default async function AdminDashboardPage() {
 function Metric({ label, value }: { label: string; value: string }) {
   return (
     <div className="stat-card">
-      <div className="text-sm text-slate-500">{label}</div>
-      <div className="mt-3 text-3xl font-bold text-slate-900">{value}</div>
+      <div className="text-xs sm:text-sm text-slate-500">{label}</div>
+      <div className="mt-2 sm:mt-3 text-2xl sm:text-3xl font-bold text-slate-900">{value}</div>
     </div>
   );
 }

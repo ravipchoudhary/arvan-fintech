@@ -53,8 +53,8 @@ export function StrategyBuilderForm() {
   }
 
   return (
-    <div className="grid gap-6 xl:grid-cols-[260px_1fr]">
-      <div className="card p-4">
+    <div className="grid gap-6 lg:grid-cols-[minmax(260px,320px)_1fr]">
+      <div className="card p-4 sm:p-5">
         <h3 className="mb-4 text-lg font-bold text-slate-900">Block Library</h3>
         <div className="space-y-2">
           {blockLibrary.map((item) => (
@@ -66,8 +66,8 @@ export function StrategyBuilderForm() {
       </div>
 
       <div className="space-y-6">
-        <div className="card p-5">
-          <div className="mb-4 flex items-center justify-between">
+        <div className="card p-4 sm:p-5">
+          <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <h3 className="text-lg font-bold text-slate-900">Rule Builder</h3>
             <div className="flex gap-2">
               <button type="button" className="rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700">Validate</button>
@@ -75,7 +75,7 @@ export function StrategyBuilderForm() {
           </div>
 
           <form className="space-y-4" onSubmit={handleSubmit}>
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-4 sm:grid-cols-2">
               <label className="rounded-2xl border border-slate-200 bg-white p-3 text-sm text-slate-700 shadow-sm transition focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100">
                 <span className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">Strategy Name</span>
                 <input
@@ -127,9 +127,9 @@ export function StrategyBuilderForm() {
           </form>
         </div>
 
-        <div className="card p-5">
+        <div className="card p-4 sm:p-5">
           <h3 className="mb-4 text-lg font-bold text-slate-900">Risk Management</h3>
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {[
               "Max Trades / Day",
               "Daily Loss Limit",

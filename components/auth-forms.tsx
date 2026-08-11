@@ -106,19 +106,19 @@ export function SignupForm({ action }: { action: string | ServerAction }) {
 
       <div className="grid gap-4 md:grid-cols-2">
         <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3">
-          <label className="mb-1 block text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">Password</label>
-          <div className="flex items-center gap-2">
+          <label className="mb-2 block text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">Password</label>
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
             <Lock className="h-4 w-4 text-slate-400" />
-            <input name="password" type={showPassword ? "text" : "password"} placeholder="Create password" className="w-full bg-transparent text-sm outline-none placeholder:text-slate-400" required />
-            <button type="button" onClick={() => setShowPassword((value) => !value)}>{showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}</button>
+            <input name="password" type={showPassword ? "text" : "password"} placeholder="Create password" className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-slate-400" required />
+            <button type="button" onClick={() => setShowPassword((value) => !value)} className="text-slate-500">{showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}</button>
           </div>
         </div>
         <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3">
-          <label className="mb-1 block text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">Confirm Password</label>
-          <div className="flex items-center gap-2">
+          <label className="mb-2 block text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">Confirm Password</label>
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
             <Lock className="h-4 w-4 text-slate-400" />
-            <input name="confirmPassword" type={showConfirm ? "text" : "password"} placeholder="Confirm password" className="w-full bg-transparent text-sm outline-none placeholder:text-slate-400" required />
-            <button type="button" onClick={() => setShowConfirm((value) => !value)}>{showConfirm ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}</button>
+            <input name="confirmPassword" type={showConfirm ? "text" : "password"} placeholder="Confirm password" className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-slate-400" required />
+            <button type="button" onClick={() => setShowConfirm((value) => !value)} className="text-slate-500">{showConfirm ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}</button>
           </div>
         </div>
       </div>

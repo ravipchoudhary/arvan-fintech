@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "deploy:vps": "npm ci && npx prisma generate && npx prisma migrate deploy && npm run build",
+    "deploy:vps": "npm ci && npx prisma generate && npx prisma db push && npm run build",
+    "migrate:sqlite-to-postgres": "node scripts/migrate-sqlite-to-postgres.js",
     "postinstall": "npx prisma generate && npm rebuild better-sqlite3 --update-binary || true"
   },
   "dependencies": {
@@ -17,12 +18,13 @@
   },
   "devDependencies": {
     "@prisma/adapter-better-sqlite3": "^7.9.1",
+    "@prisma/adapter-pg": "^7.9.1",
     "@prisma/client": "^7.9.1",
     "@tailwindcss/postcss": "^4.3.3",
-    "autoprefixer": "^10.4.14",
     "@types/node": "^20.19.43",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
+    "autoprefixer": "^10.4.14",
     "bcryptjs": "^3.0.3",
     "eslint": "^9.39.5",
     "eslint-config-next": "^16.3.0",

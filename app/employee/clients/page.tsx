@@ -24,40 +24,40 @@ export default async function EmployeeClientsPage() {
 
   return (
     <AppShell title="My Clients" subtitle="Clients assigned to you" variant="employee">
-      <div className="grid gap-5 md:grid-cols-3">
+      <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
         {stats.map((item) => (
           <div key={item.label} className="stat-card">
-            <div className="text-sm text-slate-500">{item.label}</div>
-            <div className="mt-3 text-3xl font-bold text-slate-900">{item.value}</div>
+            <div className="text-xs sm:text-sm text-slate-500">{item.label}</div>
+            <div className="mt-2 sm:mt-3 text-2xl sm:text-3xl font-bold text-slate-900">{item.value}</div>
           </div>
         ))}
       </div>
 
-      <div className="mt-6 card p-5">
-        <div className="mb-4 flex items-center justify-between">
-          <h3 className="text-lg font-bold text-slate-900">My Clients</h3>
-          <div className="flex items-center gap-3">
+      <div className="mt-8 sm:mt-10 card p-4 sm:p-5">
+        <div className="mb-3 sm:mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <h3 className="text-base sm:text-lg font-bold text-slate-900">My Clients</h3>
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
             <EmployeeClientCreateModal action={createClientForEmployeeAction} />
-            <button type="button" className="rounded-full bg-white border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700">Search</button>
+            <button type="button" className="rounded-full bg-white border border-slate-200 px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-slate-700">Search</button>
           </div>
         </div>
         <div className="table-shell">
-          <table className="min-w-full text-left text-sm">
+          <table className="min-w-full text-left text-xs sm:text-sm">
             <thead>
               <tr className="border-b border-slate-200 text-slate-500">
-                <th className="pb-3 pr-4 font-medium">Name</th>
-                <th className="pb-3 pr-4 font-medium">Email</th>
-                <th className="pb-3 pr-4 font-medium">Role</th>
-                <th className="pb-3 font-medium">Status</th>
+                <th className="pb-2 sm:pb-3 pr-2 sm:pr-4 font-medium">Name</th>
+                <th className="pb-2 sm:pb-3 pr-2 sm:pr-4 font-medium">Email</th>
+                <th className="pb-2 sm:pb-3 pr-2 sm:pr-4 font-medium">Role</th>
+                <th className="pb-2 sm:pb-3 font-medium">Status</th>
               </tr>
             </thead>
             <tbody>
               {clients.map((c) => (
                 <tr key={c.id} className="border-b border-slate-100 last:border-b-0">
-                  <td className="py-3 pr-4 font-semibold text-slate-800">{c.name}</td>
-                  <td className="py-3 pr-4 text-slate-700">{c.email}</td>
-                  <td className="py-3 pr-4 text-slate-800">{c.role}</td>
-                  <td className="py-3 text-slate-700">{c.status}</td>
+                  <td className="py-2 sm:py-3 pr-2 sm:pr-4 font-semibold text-slate-800">{c.name}</td>
+                  <td className="py-2 sm:py-3 pr-2 sm:pr-4 text-slate-700">{c.email}</td>
+                  <td className="py-2 sm:py-3 pr-2 sm:pr-4 text-slate-800">{c.role}</td>
+                  <td className="py-2 sm:py-3 text-slate-700">{c.status}</td>
                 </tr>
               ))}
             </tbody>

@@ -1,7 +1,23 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const publicRoutes = ["/", "/login", "/signup"];
+const publicRoutes = [
+  "/",
+  "/login",
+  "/signup",
+  "/about",
+  "/services",
+  "/features",
+  "/how-it-works",
+  "/pricing",
+  "/faq",
+  "/blog",
+  "/contact",
+  "/privacy-policy",
+  "/terms-and-conditions",
+  "/refund-policy",
+  "/disclaimer",
+];
 
 function parseSession(value?: string) {
   if (!value) return null;

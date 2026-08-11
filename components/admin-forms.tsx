@@ -54,23 +54,23 @@ export function EmployeeForm({ action, defaultValues, submitLabel = "Save Employ
         </div>
         <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3">
           <label className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">Password</label>
-          <div className="relative">
+          <div className="relative flex items-center gap-2">
             <input
               name="password"
               type={showPassword ? "text" : "password"}
               placeholder={isEdit ? "Leave blank to keep current password" : "Create password (min 8 characters)"}
-              className="w-full bg-transparent text-sm text-slate-800 outline-none"
+              className="min-w-0 flex-1 bg-transparent text-sm text-slate-800 outline-none"
               required={!isEdit}
               minLength={!isEdit ? 8 : undefined}
             />
-            <button type="button" className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-500" onClick={() => setShowPassword((value) => !value)}>
+            <button type="button" className="text-slate-500" onClick={() => setShowPassword((value) => !value)}>
               {showPassword ? "Hide" : "Show"}
             </button>
           </div>
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
         <button type="submit" className="rounded-full bg-blue-600 px-5 py-2.5 font-semibold text-white">{submitLabel}</button>
         <Link href="/admin/employees" className="rounded-full border border-slate-200 px-5 py-2.5 font-semibold text-slate-700">Cancel</Link>
       </div>

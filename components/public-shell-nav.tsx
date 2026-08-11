@@ -1,0 +1,112 @@
+﻿"use client";
+
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { BrandLogo } from "@/components/brand-logo";
+import { publicNavItems } from "@/lib/navigation";
+import { Menu, X } from "lucide-react";
+
+export default function PublicShellNav() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
+  const closeMobileMenu = () => setMobileMenuOpen(false);
+  const toggleMobileMenu = () => setMobileMenuOpen((prev) => !prev);
+
+  return (
+    <div className="relative">
+      {mobileMenuOpen ? <div className="fixed inset-0 z-30 bg-black/50 md:hidden" onClick={closeMobileMenu} /> : null}
+      <header className="border-b border-white/10 bg-[#07111f]/95 backdrop-blur relative z-40">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
+          <Link href="/" className="flex items-center gap-3">
+            <BrandLogo
+              withLabel
+              label="Arvan Fintech"
+              subtitle="Trading automation and strategy operations"
+              labelClassName="text-white"
+              subtitleClassName="text-slate-300"
+            />
+          </Link>
+
+          <nav className="hidden items-center gap-6 text-sm text-slate-300 md:flex">
+            {publicNavItems.map((item) => (
+              <Link key={item.href} href={item.href} className="transition hover:text-white">
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="hidden items-center gap-3 md:flex">
+            <Link href="/login" className="rounded-full border border-white/15 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-blue-400 hover:text-white">
+              Login
+            </Link>
+            <Link href="/signup" className="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-500">
+              Get Started
+            </Link>
+          </div>
+
+          <button type="button" onClick={toggleMobileMenu} className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/20 text-white md:hidden">
+            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
+      </header>
+
+      <div className={`fixed inset-x-0 top-0 z-40 h-full w-full overflow-y-auto bg-slate-950/95 transition-transform duration-300 md:hidden ${mobileMenuOpen ? "translate-y-0" : "-translate-y-full"}`}>
+        <div className="mx-auto max-w-7xl px-5 py-4">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white p-2">
+                <img src="/arvan-logo.png" alt="Arvan Fintech" className="h-full w-full object-contain" />
+              </div>
+              <div>
+                <div className="text-base font-semibold text-white">ARVAN FINTECH</div>
+                <div className="text-xs uppercase tracking-[0.24em] text-slate-400">Trading automation</div>
+              </div>
+            </div>
+            <button type="button" onClick={closeMobileMenu} className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/20 text-white">
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+
+        <nav className="mx-auto max-w-7xl w-full flex flex-col px-5 pb-6">
+          {publicNavItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={closeMobileMenu}
+              className="border-t border-white/10 px-5 py-4 text-sm font-medium text-slate-300 transition hover:bg-white/10 hover:text-white"
+            >
+              {item.label}
+            </Link>
+          ))}
+          <div className="border-t border-white/10 bg-slate-950/70 px-5 py-3">
+            <Link href="/login" onClick={closeMobileMenu} className="block rounded-lg px-3 py-2.5 text-sm font-medium text-slate-300 transition hover:bg-white/10 hover:text-white">
+              Login
+            </Link>
+            <Link href="/signup" onClick={closeMobileMenu} className="mt-2 block rounded-lg bg-blue-600 px-3 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-blue-500">
+              Get Started
+            </Link>
+          </div>
+        </nav>
+      </div>
+    </div>
+  );
+}
