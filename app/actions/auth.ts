@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
+import { getDashboardPathForRole } from "@/lib/auth";
 import { getSessionUser, setSession } from "@/lib/session";
 import { loginSchema, signupSchema } from "@/lib/validators";
 
@@ -38,7 +39,7 @@ export async function loginAction(formData: FormData) {
       role: user.role,
     });
 
-    const redirectPath = user.role === "ADMIN" ? "/admin/dashboard" : user.role === "MANAGER" ? "/dashboard" : user.role === "CLIENT" ? "/client/dashboard" : "/employee/dashboard";
+    const redirectPath = getDashboardPathForRole(user.role);
     return { success: true, redirect: redirectPath };
   } catch {
     return { success: false, message: "Unable to authenticate right now. Please check your database configuration." };
@@ -91,7 +92,7 @@ export async function signupAction(formData: FormData) {
     role: user.role,
   });
 
-  redirect("/dashboard");
+  redirect(getDashboardPathForRole("EMPLOYEE"));
 }
 
 export async function createClientForEmployeeAction(_prevState: { success: boolean; message?: string | null } | null, formData: FormData) {

@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { getDashboardPathForRole } from "@/lib/auth";
 import { setSession } from "@/lib/session";
 import { loginSchema } from "@/lib/validators";
 
@@ -37,14 +38,7 @@ export async function POST(request: Request) {
       role: user.role,
     });
 
-    const redirectPath =
-      user.role === "ADMIN" || user.role === "MANAGER"
-        ? "/admin/dashboard"
-        : user.role === "EMPLOYEE"
-        ? "/employee/dashboard"
-        : user.role === "CLIENT"
-        ? "/client/dashboard"
-        : "/";
+    const redirectPath = getDashboardPathForRole(user.role);
 
     if (request.headers.get("accept")?.includes("application/json")) {
       return NextResponse.json({ success: true, redirect: redirectPath });

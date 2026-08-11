@@ -1,7 +1,7 @@
 import { PublicShell, SectionHeading } from "@/components/public-site";
 
 const faqs = [
-  { question: "What is ARVAN FINTECH?", answer: "ARVAN FINTECH is a trading automation and analytics platform that helps teams build strategies, connect broker workflows and monitor trading operations in one place." },
+  { question: "What is Arvan Fintech?", answer: "Arvan Fintech is a trading automation and analytics platform that helps teams build strategies, connect broker workflows and monitor trading operations in one place." },
   { question: "What is algorithmic trading?", answer: "Algorithmic trading uses predefined rules to automate trading decisions and execution based on market conditions." },
   { question: "Do I need coding knowledge?", answer: "The platform is designed to support structured strategy workflows, but implementation may require assistance depending on the complexity of the strategy." },
   { question: "How does strategy backtesting work?", answer: "Backtesting evaluates strategies against historical data so performance and risk can be reviewed before deployment." },
@@ -10,7 +10,7 @@ const faqs = [
   { question: "What risk controls are available?", answer: "The platform supports exposure controls, drawdown monitoring, position limits and daily loss thresholds." },
   { question: "How does pricing work?", answer: "Pricing is offered through monthly, quarterly, half yearly and yearly plans with optional customization for premium needs." },
   { question: "Is GST included?", answer: "The displayed pricing is listed as + GST and may be adjusted according to the plan and billing requirements." },
-  { question: "Does ARVAN FINTECH guarantee profits?", answer: "No. Trading involves market risk and ARVAN FINTECH does not guarantee profits or returns." },
+  { question: "Does Arvan Fintech guarantee profits?", answer: "No. Trading involves market risk and Arvan Fintech does not guarantee profits or returns." },
 ];
 
 export default function FaqPage() {

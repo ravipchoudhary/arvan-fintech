@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { signupAction } from "@/app/actions/auth";
 import { SignupForm } from "@/components/auth-forms";
+import { BrandLogo } from "@/components/brand-logo";
 
 export default function SignupPage() {
   return (
@@ -10,11 +11,7 @@ export default function SignupPage() {
         <div className="grid md:grid-cols-[0.9fr_1.1fr]">
           <div className="bg-[#071526] p-8 text-white md:p-12">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 font-bold">A</div>
-              <div>
-                <div className="text-xl font-bold">Arvan Fintech</div>
-                <div className="text-[10px] uppercase tracking-[0.2em] text-slate-400">Trading automation and strategy operations</div>
-              </div>
+              <BrandLogo withLabel label="Arvan Fintech" subtitle="Trading automation and strategy operations" />
             </div>
             <h1 className="mt-10 text-4xl font-black leading-tight">Start building smarter trades.</h1>
             <p className="mt-4 max-w-md text-slate-300">Launch strategy workflows, automate execution and track performance in real time.</p>

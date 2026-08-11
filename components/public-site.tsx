@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { ArrowRight, BarChart3, Bot, Briefcase, CircleCheck, Cpu, ShieldCheck, Sparkles, Zap } from "lucide-react";
+import { BrandLogo } from "@/components/brand-logo";
 import type { LucideIcon } from "lucide-react";
 
 const navItems = [
@@ -32,11 +33,7 @@ export function PublicShell({
       <header className="border-b border-white/10 bg-[#07111f]/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
           <Link href="/" className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-600 font-semibold text-white">A</div>
-            <div>
-              <div className="text-lg font-semibold tracking-wide text-white">ARVAN FINTECH</div>
-              <div className="text-[10px] uppercase tracking-[0.25em] text-slate-400">Trading automation platform</div>
-            </div>
+            <BrandLogo withLabel label="Arvan Fintech" subtitle="Trading automation and strategy operations" />
           </Link>
 
           <nav className="hidden items-center gap-6 text-sm text-slate-300 md:flex">
@@ -113,7 +110,7 @@ export function PublicShell({
       <footer className="border-t border-white/10 bg-slate-950/90">
         <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 lg:grid-cols-4 lg:px-8">
           <div>
-            <div className="text-xl font-semibold text-white">ARVAN FINTECH</div>
+            <BrandLogo withLabel label="Arvan Fintech" subtitle="Trading automation and strategy operations" className="mb-4" />
             <p className="mt-3 text-sm leading-7 text-slate-400">A modern fintech platform for strategy automation, analytics, risk controls and broker connectivity.</p>
           </div>
           <FooterColumn title="Services" links={[{ href: "/services", label: "Algo Trading" }, { href: "/broker-api-integration", label: "API Bridge" }, { href: "/analytics", label: "Analytics" }, { href: "/risk-management", label: "Risk Management" }]} />

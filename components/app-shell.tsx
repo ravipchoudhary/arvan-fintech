@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight, BarChart3, BriefcaseBusiness, Building2, CreditCard, Gauge, LayoutDashboard, LogOut, Menu, Shield, Users, Wallet } from "lucide-react";
 import { getSessionUser } from "@/lib/session";
+import { BrandLogo } from "@/components/brand-logo";
 
 const adminNavSections = [
   {
@@ -116,11 +117,7 @@ export async function AppShell({
       <div className="flex min-h-screen">
         <aside className={`hidden w-72 flex-col px-5 py-6 text-slate-100 lg:flex ${isEmployeeVariant ? "bg-indigo-950" : "bg-slate-950"}`}>
           <div className="mb-8 flex items-center gap-3 px-3">
-            <div className={`flex h-9 w-9 items-center justify-center rounded-xl text-sm font-bold text-white ${isEmployeeVariant ? "bg-indigo-600" : isClientVariant ? "bg-emerald-600" : "bg-blue-600"}`}>{initials[0] ?? "A"}</div>
-            <div>
-              <div className="text-lg font-bold tracking-tight">Arvan Fintech</div>
-              <div className="text-[11px] text-slate-400">{isClientVariant ? "Client Portal" : panelBadge}</div>
-            </div>
+            <BrandLogo withLabel label="Arvan Fintech" subtitle={isClientVariant ? "Client Portal" : panelBadge} />
           </div>
           <nav className="space-y-6 overflow-y-auto">
             {finalNavSections.map((section) => (

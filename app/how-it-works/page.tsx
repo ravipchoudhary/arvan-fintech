@@ -3,7 +3,7 @@ import { PublicShell, SectionHeading, StepCard } from "@/components/public-site"
 export default function HowItWorksPage() {
   return (
     <PublicShell
-      title="How ARVAN FINTECH Works"
+      title="How Arvan Fintech Works"
       description="A simple sequence from account setup to live monitoring, built to keep operations structured and transparent."
       eyebrow="How It Works"
       hero={null}

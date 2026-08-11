@@ -6,8 +6,8 @@ export default function AboutPage() {
   return (
     <PublicShell
       title="Technology That Makes Trading More Systematic"
-      description="ARVAN FINTECH combines algorithmic trading, strategy development, backtesting, automation, risk controls and analytics into one secure platform."
-      eyebrow="About ARVAN FINTECH"
+      description="Arvan Fintech combines algorithmic trading, strategy development, backtesting, automation, risk controls and analytics into one secure platform."
+      eyebrow="About Arvan Fintech"
       hero={
         <div className="mt-8 flex flex-wrap gap-3">
           <Link href="/services" className="rounded-full bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-500">Explore Services</Link>
@@ -18,10 +18,10 @@ export default function AboutPage() {
       <section className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="rounded-[32px] border border-white/10 bg-slate-900/70 p-8">
           <SectionHeading eyebrow="About Us" title="A modern trading automation platform" description="Designed for professionals who need a structured path from signal to execution, dashboard to reporting, and analytics to risk oversight." />
-          <p className="mt-6 text-lg leading-8 text-slate-400">ARVAN FINTECH helps teams build systematic strategies, connect to supported brokers, monitor live activity and manage exposure with clarity. The platform brings execution, risk and analytics together so decisions can be made with full context.</p>
+          <p className="mt-6 text-lg leading-8 text-slate-400">Arvan Fintech helps teams build systematic strategies, connect to supported brokers, monitor live activity and manage exposure with clarity. The platform brings execution, risk and analytics together so decisions can be made with full context.</p>
         </div>
         <div className="rounded-[32px] border border-white/10 bg-gradient-to-br from-blue-600/20 to-slate-900 p-8">
-          <h3 className="text-2xl font-semibold text-white">Why ARVAN FINTECH?</h3>
+          <h3 className="text-2xl font-semibold text-white">Why Arvan Fintech?</h3>
           <ul className="mt-6 space-y-4 text-slate-300">
             <li>• Strategy-focused automation</li>
             <li>• Advanced analytics and reporting</li>

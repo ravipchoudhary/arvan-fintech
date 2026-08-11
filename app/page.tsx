@@ -15,7 +15,7 @@ export default async function HomePage() {
     <PublicShell
       title="Smarter Trading. Powerful Automation."
       description="Build, test and automate systematic trading strategies with analytics, risk controls and broker connectivity in one secure operating environment."
-      eyebrow="ARVAN FINTECH"
+      eyebrow="Arvan Fintech"
       hero={
         <div className="mt-8 flex flex-wrap gap-3">
           <Link href="/signup" className="rounded-full bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-500">Get Started</Link>
@@ -47,12 +47,12 @@ export default async function HomePage() {
 
       <section className="mt-16 grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="rounded-[32px] border border-white/10 bg-slate-900/70 p-8">
-          <SectionHeading eyebrow="About ARVAN FINTECH" title="Technology That Makes Trading More Systematic" description="ARVAN FINTECH brings strategy development, automation, analytics, risk controls and broker connectivity together in a single operating layer." />
+          <SectionHeading eyebrow="About Arvan Fintech" title="Technology That Makes Trading More Systematic" description="Arvan Fintech brings strategy development, automation, analytics, risk controls and broker connectivity together in a single operating layer." />
           <p className="mt-6 text-lg leading-8 text-slate-400">The platform is built for teams that need a disciplined approach to execution, monitoring and reporting without losing focus on operational control.</p>
           <Link href="/about" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-blue-300">Learn More <ArrowRight className="h-4 w-4" /></Link>
         </div>
         <div className="rounded-[32px] border border-white/10 bg-gradient-to-br from-blue-600/20 to-slate-900 p-8">
-          <h3 className="text-2xl font-semibold text-white">Why ARVAN FINTECH?</h3>
+          <h3 className="text-2xl font-semibold text-white">Why Arvan Fintech?</h3>
           <ul className="mt-6 space-y-4 text-slate-300">
             <li>• Strategy-focused automation</li>
             <li>• Real-time monitoring and alerts</li>
@@ -63,7 +63,7 @@ export default async function HomePage() {
       </section>
 
       <section className="mt-16">
-        <SectionHeading eyebrow="Services" title="A complete trading workflow for modern teams" description="From strategy creation to execution monitoring and analytics, ARVAN FINTECH covers the full journey." />
+        <SectionHeading eyebrow="Services" title="A complete trading workflow for modern teams" description="From strategy creation to execution monitoring and analytics, Arvan Fintech covers the full journey." />
         <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           <FeatureCard icon={Bot} title="Algo Trading" description="Automate trading strategies with structured execution workflows and clear oversight." />
           <FeatureCard icon={BarChart3} title="API Bridge" description="Connect supported brokers and trading data through secure centralized integrations." />
@@ -95,7 +95,7 @@ export default async function HomePage() {
       </section>
 
       <section className="mt-16">
-        <SectionHeading eyebrow="Testimonials" title="Trusted by teams building disciplined trading workflows" description="ARVAN FINTECH is designed for professional trading operations that need structure, visibility and control." />
+        <SectionHeading eyebrow="Testimonials" title="Trusted by teams building disciplined trading workflows" description="Arvan Fintech is designed for professional trading operations that need structure, visibility and control." />
         <div className="mt-8 grid gap-6 md:grid-cols-3">
           <TestimonialCard quote="The workflow feels structured and practical for both strategy execution and daily monitoring." author="A. Sharma" role="Portfolio Operations Lead" />
           <TestimonialCard quote="We use the platform to keep analytics, risk and execution aligned in one place." author="N. Verma" role="Trading Desk Manager" />

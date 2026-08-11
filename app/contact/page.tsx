@@ -2,7 +2,7 @@ import { PublicShell, SectionHeading } from "@/components/public-site";
 
 export default function ContactPage() {
   return (
-    <PublicShell title="Contact ARVAN FINTECH" description="Get in touch for product questions, implementation support and tailored pricing inquiries." eyebrow="Contact" hero={null}>
+    <PublicShell title="Contact Arvan Fintech" description="Get in touch for product questions, implementation support and tailored pricing inquiries." eyebrow="Contact" hero={null}>
       <section className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="rounded-[32px] border border-white/10 bg-slate-900/70 p-8">
           <SectionHeading eyebrow="Support" title="Let’s talk about your trading workflow" description="Whether you are exploring automation or need a tailored deployment plan, our team can help you get started." />

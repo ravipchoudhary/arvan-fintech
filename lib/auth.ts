@@ -11,6 +11,21 @@ export function parseSessionFromRequest(request: Request) {
   }
 }
 
+export function getDashboardPathForRole(role?: string | null) {
+  switch (role) {
+    case "ADMIN":
+      return "/admin/dashboard";
+    case "MANAGER":
+      return "/dashboard";
+    case "EMPLOYEE":
+      return "/employee/dashboard";
+    case "CLIENT":
+      return "/client/dashboard";
+    default:
+      return "/login";
+  }
+}
+
 export function isAdmin(session: any) {
   return session?.role === "ADMIN";
 }

@@ -5,7 +5,7 @@ export default function ServicesPage() {
   return (
     <PublicShell
       title="Services Built For Modern Trading Operations"
-      description="From algo trading to broker connectivity and analytics, ARVAN FINTECH provides a complete operating layer for modern trading teams."
+      description="From algo trading to broker connectivity and analytics, Arvan Fintech provides a complete operating layer for modern trading teams."
       eyebrow="Services"
       hero={null}
     >
@@ -19,7 +19,7 @@ export default function ServicesPage() {
       </section>
 
       <section className="mt-16 rounded-[32px] border border-white/10 bg-slate-900/70 p-8">
-        <SectionHeading eyebrow="Operational coverage" title="Everything needed to run trading workflows with confidence" description="ARVAN FINTECH supports strategy creation, execution monitoring, reporting, risk checks and broker connectivity in a unified environment." />
+        <SectionHeading eyebrow="Operational coverage" title="Everything needed to run trading workflows with confidence" description="Arvan Fintech supports strategy creation, execution monitoring, reporting, risk checks and broker connectivity in a unified environment." />
       </section>
     </PublicShell>
   );
