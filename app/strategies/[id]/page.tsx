@@ -3,10 +3,11 @@ import { notFound } from "next/navigation";
 import { AppShell } from "@/components/app-shell";
 import { prisma } from "@/lib/db";
 
-type Props = { params: { id: string | string[] } };
+type Props = { params: Promise<{ id: string | string[] }> };
 
 export default async function StrategyPage({ params }: Props) {
-  const id = Array.isArray(params.id) ? params.id[0] : params.id;
+  const resolvedParams = await params;
+  const id = Array.isArray(resolvedParams.id) ? resolvedParams.id[0] : resolvedParams.id;
   if (!id) notFound();
 
   const strategy = await prisma.strategy.findUnique({ where: { id } });

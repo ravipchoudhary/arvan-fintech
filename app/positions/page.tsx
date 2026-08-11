@@ -1,37 +1,27 @@
 import { AppShell } from "@/components/app-shell";
-import { positions } from "@/lib/demo-data";
+import { prisma } from "@/lib/db";
 
-export default function PositionsPage() {
+export default async function PositionsPage() {
+  const strategyCount = await prisma.strategy.count();
+  const liveCount = await prisma.strategy.count({ where: { status: "RUNNING" } });
+  const pausedCount = await prisma.strategy.count({ where: { status: "PAUSED" } });
+
   return (
     <AppShell title="Positions" subtitle="Open positions overview">
-      <div className="card p-5">
-        <div className="table-shell">
-          <table className="min-w-full text-left text-sm">
-            <thead>
-              <tr className="border-b border-slate-200 text-slate-500">
-                <th className="pb-3 pr-4 font-medium">Symbol</th>
-                <th className="pb-3 pr-4 font-medium">Type</th>
-                <th className="pb-3 pr-4 font-medium">Quantity</th>
-                <th className="pb-3 pr-4 font-medium">Average Price</th>
-                <th className="pb-3 pr-4 font-medium">LTP</th>
-                <th className="pb-3 font-medium">P&L</th>
-              </tr>
-            </thead>
-            <tbody>
-              {positions.map((row) => (
-                <tr key={row.symbol} className="border-b border-slate-100 last:border-b-0">
-                  <td className="py-3 pr-4 font-semibold text-slate-800">{row.symbol}</td>
-                  <td className="py-3 pr-4 text-slate-700">{row.type}</td>
-                  <td className="py-3 pr-4 text-slate-700">{row.quantity}</td>
-                  <td className="py-3 pr-4 text-slate-700">₹{row.avg.toLocaleString("en-IN")}</td>
-                  <td className="py-3 pr-4 text-slate-700">₹{row.ltp.toLocaleString("en-IN")}</td>
-                  <td className={`py-3 font-semibold ${row.pnl.startsWith("+") ? "text-green-600" : "text-red-600"}`}>{row.pnl}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      <div className="grid gap-4 md:grid-cols-3">
+        <PositionCard label="Total strategies" value={strategyCount.toString()} />
+        <PositionCard label="Live strategies" value={liveCount.toString()} />
+        <PositionCard label="Paused strategies" value={pausedCount.toString()} />
       </div>
     </AppShell>
+  );
+}
+
+function PositionCard({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-3xl border border-slate-200 bg-white p-6 text-center">
+      <div className="text-sm uppercase tracking-[0.16em] text-slate-500">{label}</div>
+      <div className="mt-3 text-4xl font-semibold text-slate-900">{value}</div>
+    </div>
   );
 }

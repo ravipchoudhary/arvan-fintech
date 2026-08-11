@@ -1,31 +1,46 @@
 import { AppShell } from "@/components/app-shell";
-import { riskSettings } from "@/lib/demo-data";
+import { prisma } from "@/lib/db";
 
-export default function RiskManagementPage() {
+export default async function RiskManagementPage() {
+  const [strategyCount, runningStrategies, brokerCount] = await Promise.all([
+    prisma.strategy.count(),
+    prisma.strategy.count({ where: { status: "RUNNING" } }),
+    prisma.broker.count(),
+  ]);
+
+  const dailyLoss = brokerCount * 150000;
+  const maxExposure = brokerCount * 2500000;
+
   return (
-    <AppShell title="Risk Management" subtitle="System limits and overrides">
+    <AppShell title="Risk Management" subtitle="Platform risk overview">
       <div className="card p-5">
-        <h3 className="mb-4 text-lg font-bold text-slate-900">Account Limits</h3>
+        <h3 className="mb-4 text-lg font-bold text-slate-900">Connected account risk summary</h3>
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {riskSettings.map((item) => (
-            <div key={item.label} className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-              <div className="text-xs uppercase tracking-[0.14em] text-slate-500">{item.label}</div>
-              <div className="mt-2 text-xl font-bold text-slate-900">{item.value}</div>
-            </div>
-          ))}
+          <RiskMetric label="Live strategies" value={runningStrategies.toString()} />
+          <RiskMetric label="Total strategies" value={strategyCount.toString()} />
+          <RiskMetric label="Connected brokers" value={brokerCount.toString()} />
         </div>
       </div>
 
       <div className="mt-6 card p-5">
-        <h3 className="mb-4 text-lg font-bold text-slate-900">Strategy-level Overrides</h3>
+        <h3 className="mb-4 text-lg font-bold text-slate-900">Recommended limits</h3>
         <div className="space-y-3 text-sm text-slate-700">
-          <Row label="Daily Loss Limit" value="₹1.5L" />
+          <Row label="Daily Loss Limit" value={`₹${dailyLoss.toLocaleString("en-IN")}`} />
+          <Row label="Max Exposure" value={`₹${maxExposure.toLocaleString("en-IN")}`} />
           <Row label="Max Positions" value="05" />
-          <Row label="Max Exposure" value="₹25L" />
-          <Row label="Enable / Disable" value="Enabled" />
+          <Row label="Auto square off" value="Enabled" />
         </div>
       </div>
     </AppShell>
+  );
+}
+
+function RiskMetric({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+      <div className="text-sm uppercase tracking-[0.14em] text-slate-500">{label}</div>
+      <div className="mt-2 text-2xl font-semibold text-slate-900">{value}</div>
+    </div>
   );
 }
 

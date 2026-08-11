@@ -57,6 +57,13 @@ async function main() {
       password: "Employee@12345",
       role: "EMPLOYEE",
     },
+    {
+      name: "Arvan Client",
+      email: "client@arvanalgo.com",
+      phone: "+919876543213",
+      password: "Client@12345",
+      role: "CLIENT",
+    },
   ];
 
   for (const user of users) {

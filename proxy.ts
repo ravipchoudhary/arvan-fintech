@@ -15,13 +15,19 @@ function parseSession(value?: string) {
 
 function hasAccess(pathname: string, role?: string) {
   if (!role) return false;
-
+  // Admin area: ADMIN and MANAGER
   if (pathname.startsWith("/admin/")) {
-    return role === "ADMIN";
+    return role === "ADMIN" || role === "MANAGER";
   }
 
+  // Employee area: only EMPLOYEE
   if (pathname.startsWith("/employee/")) {
-    return ["ADMIN", "MANAGER", "EMPLOYEE"].includes(role);
+    return role === "EMPLOYEE";
+  }
+
+  // Client area: only CLIENT
+  if (pathname.startsWith("/client/")) {
+    return role === "CLIENT";
   }
 
   return true;
@@ -40,9 +46,18 @@ export function proxy(request: NextRequest) {
   if (!session) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
-
   if (!hasAccess(pathname, session.role)) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+    // redirect users to their appropriate dashboard
+    const redirectPath =
+      session.role === "ADMIN" || session.role === "MANAGER"
+        ? "/admin/dashboard"
+        : session.role === "EMPLOYEE"
+        ? "/employee/dashboard"
+        : session.role === "CLIENT"
+        ? "/client/dashboard"
+        : "/login";
+
+    return NextResponse.redirect(new URL(redirectPath, request.url));
   }
 
   return NextResponse.next();

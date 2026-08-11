@@ -19,7 +19,7 @@ export default function BillingPage() {
                 <li key={feature}>• {feature}</li>
               ))}
             </ul>
-            <button className={`mt-5 w-full rounded-full px-4 py-2 text-sm font-semibold ${plan.name === "Pro" ? "bg-blue-600 text-white" : "border border-slate-200 bg-white text-slate-700"}`}>
+            <button type="button" className={`mt-5 w-full rounded-full px-4 py-2 text-sm font-semibold ${plan.name === "Pro" ? "bg-blue-600 text-white" : "border border-slate-200 bg-white text-slate-700"}`}>
               {plan.name === "Free" ? "Current Plan" : plan.name === "Pro" ? "Upgrade" : "Manage"}
             </button>
           </div>

@@ -97,7 +97,7 @@ export function SignupForm({ action }: { action: string | ServerAction }) {
   const [showConfirm, setShowConfirm] = useState(false);
 
   return (
-    <form action={action} className="space-y-4">
+    <form action={action} method="POST" className="space-y-4">
       <div className="grid gap-4 md:grid-cols-2">
         <Field icon={<UserRound className="h-4 w-4 text-slate-400" />} label="Full Name" name="name" placeholder="John Doe" />
         <Field icon={<Mail className="h-4 w-4 text-slate-400" />} label="Email" name="email" type="email" placeholder="name@email.com" />

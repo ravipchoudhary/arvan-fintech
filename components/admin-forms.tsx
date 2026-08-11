@@ -58,9 +58,10 @@ export function EmployeeForm({ action, defaultValues, submitLabel = "Save Employ
             <input
               name="password"
               type={showPassword ? "text" : "password"}
-              placeholder={isEdit ? "Leave blank to keep current password" : "Create password"}
+              placeholder={isEdit ? "Leave blank to keep current password" : "Create password (min 8 characters)"}
               className="w-full bg-transparent text-sm text-slate-800 outline-none"
-              {...(isEdit ? {} : { required: true })}
+              required={!isEdit}
+              minLength={!isEdit ? 8 : undefined}
             />
             <button type="button" className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-500" onClick={() => setShowPassword((value) => !value)}>
               {showPassword ? "Hide" : "Show"}

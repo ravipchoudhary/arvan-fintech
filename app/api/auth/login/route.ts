@@ -6,21 +6,15 @@ import { loginSchema } from "@/lib/validators";
 
 export async function POST(request: Request) {
   const formData = await request.formData();
-  const data = {
-    emailOrPhone: String(formData.get("emailOrPhone") || ""),
-    password: String(formData.get("password") || ""),
-  };
+  const emailOrPhone = String(formData.get("emailOrPhone") || "").trim();
+  const password = String(formData.get("password") || "").trim();
 
-  const parsed = loginSchema.safeParse(data);
-
-  if (!parsed.success) {
+  if (!emailOrPhone || !password) {
     return NextResponse.json(
       { success: false, message: "Please enter a valid email/phone and password." },
       { status: 400 },
     );
   }
-
-  const { emailOrPhone, password } = parsed.data;
 
   try {
     const user = await prisma.user.findFirst({
@@ -43,11 +37,20 @@ export async function POST(request: Request) {
       role: user.role,
     });
 
+    const redirectPath =
+      user.role === "ADMIN" || user.role === "MANAGER"
+        ? "/admin/dashboard"
+        : user.role === "EMPLOYEE"
+        ? "/employee/dashboard"
+        : user.role === "CLIENT"
+        ? "/client/dashboard"
+        : "/";
+
     if (request.headers.get("accept")?.includes("application/json")) {
-      return NextResponse.json({ success: true, redirect: "/dashboard" });
+      return NextResponse.json({ success: true, redirect: redirectPath });
     }
 
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+    return NextResponse.redirect(new URL(redirectPath, request.url));
   } catch (error) {
     console.error("Login API error:", error);
     if (request.headers.get("accept")?.includes("application/json")) {

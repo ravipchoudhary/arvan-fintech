@@ -12,8 +12,8 @@ export default function SignupPage() {
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 font-bold">A</div>
               <div>
-                <div className="text-xl font-bold">ARVAN ALGO</div>
-                <div className="text-[10px] uppercase tracking-[0.2em] text-slate-400">Automated Algo Trading Platform</div>
+                <div className="text-xl font-bold">Arvan Fintech</div>
+                <div className="text-[10px] uppercase tracking-[0.2em] text-slate-400">Trading automation and strategy operations</div>
               </div>
             </div>
             <h1 className="mt-10 text-4xl font-black leading-tight">Start building smarter trades.</h1>
@@ -22,9 +22,9 @@ export default function SignupPage() {
             <div className="mt-10 rounded-3xl border border-slate-700 bg-slate-900/60 p-5 text-sm text-slate-300">
               <div className="mb-2 text-slate-400">Platform highlights</div>
               <ul className="space-y-2">
-                <li>• 50K+ strategies built</li>
-                <li>• 99.9% platform uptime</li>
-                <li>• Role-based team access</li>
+                <li>• Real strategy and broker data</li>
+                <li>• Live account connectivity</li>
+                <li>• Role-based access and management</li>
               </ul>
             </div>
           </div>

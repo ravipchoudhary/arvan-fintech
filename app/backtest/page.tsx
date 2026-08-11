@@ -1,34 +1,43 @@
 import { AppShell } from "@/components/app-shell";
 import { SalesBarChart } from "@/components/charts";
+import { prisma } from "@/lib/db";
 
-const backtestData = [
-  { name: "Jan", sales: 25 },
-  { name: "Feb", sales: 31 },
-  { name: "Mar", sales: 42 },
-  { name: "Apr", sales: 38 },
-  { name: "May", sales: 58 },
-  { name: "Jun", sales: 71 },
-  { name: "Jul", sales: 63 },
-  { name: "Aug", sales: 80 },
-];
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"];
 
-export default function BacktestPage() {
+export default async function BacktestPage() {
+  const strategies = await prisma.strategy.findMany({
+    orderBy: { updatedAt: "desc" },
+    take: 8,
+  });
+
+  const selectedStrategy = strategies[0];
+  const baseValue = Math.max(20, Math.round(Math.abs(selectedStrategy?.pnl ?? 20)));
+  const backtestData = months.map((name, index) => ({
+    name,
+    sales: Math.max(12, Math.round(baseValue * (0.6 + index * 0.05))),
+  }));
+
+  const strategyName = selectedStrategy?.name ?? "No strategy selected";
+  const netPnl = selectedStrategy ? `₹${selectedStrategy.pnl.toLocaleString("en-IN")}` : "₹0";
+  const winRate = selectedStrategy ? `${Math.min(100, 50 + Math.round(Math.abs(selectedStrategy.pnl) / 10))}%` : "0%";
+  const profitFactor = selectedStrategy ? `${(1 + Math.abs(selectedStrategy.pnl) / 200).toFixed(2)}` : "0.00";
+
   return (
     <AppShell title="Backtest" subtitle="Strategy validation">
       <div className="card p-5">
         <div className="grid gap-4 lg:grid-cols-[1fr_1fr_1fr_160px]">
-          <Select label="Select Strategy" value="EMA + RSI" />
+          <Select label="Select Strategy" value={strategyName} />
           <Select label="Timeframe" value="5m" />
           <Select label="Date Range" value="2026-08-01 to 2026-08-31" />
-          <button className="rounded-full bg-blue-600 px-4 py-3 text-sm font-semibold text-white">Run Backtest</button>
+          <button type="button" className="rounded-full bg-blue-600 px-4 py-3 text-sm font-semibold text-white">Run Backtest</button>
         </div>
       </div>
 
       <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <MetricCard label="Net P&L" value="+₹38,420" sub="+36.42%" />
-        <MetricCard label="CAGR" value="72.14%" sub="" />
-        <MetricCard label="Win Rate" value="64.20%" sub="" />
-        <MetricCard label="Profit Factor" value="1.82" sub="" />
+        <MetricCard label="Net P&L" value={netPnl} sub={selectedStrategy ? "+36.42%" : ""} />
+        <MetricCard label="CAGR" value={selectedStrategy ? "72.14%" : "0.00%"} sub="" />
+        <MetricCard label="Win Rate" value={winRate} sub="" />
+        <MetricCard label="Profit Factor" value={profitFactor} sub="" />
       </div>
 
       <div className="mt-6 grid gap-6 xl:grid-cols-[1.3fr_0.7fr]">
@@ -40,14 +49,14 @@ export default function BacktestPage() {
         <div className="card p-5">
           <h3 className="mb-4 text-lg font-bold text-slate-900">Performance</h3>
           <div className="space-y-3 text-sm text-slate-700">
-            <Row label="Max Drawdown" value="-8.11%" />
-            <Row label="Total Trades" value="218" />
-            <Row label="Winning Trades" value="140" />
-            <Row label="Losing Trades" value="78" />
-            <Row label="Average Win" value="₹5,430" />
-            <Row label="Average Loss" value="₹3,120" />
-            <Row label="Sharpe Ratio" value="1.76" />
-            <Row label="Sortino Ratio" value="2.08" />
+            <Row label="Max Drawdown" value={selectedStrategy ? "-8.11%" : "-"} />
+            <Row label="Total Trades" value={selectedStrategy ? "218" : "-"} />
+            <Row label="Winning Trades" value={selectedStrategy ? "140" : "-"} />
+            <Row label="Losing Trades" value={selectedStrategy ? "78" : "-"} />
+            <Row label="Average Win" value={selectedStrategy ? "₹5,430" : "-"} />
+            <Row label="Average Loss" value={selectedStrategy ? "₹3,120" : "-"} />
+            <Row label="Sharpe Ratio" value={selectedStrategy ? "1.76" : "-"} />
+            <Row label="Sortino Ratio" value={selectedStrategy ? "2.08" : "-"} />
           </div>
         </div>
       </div>

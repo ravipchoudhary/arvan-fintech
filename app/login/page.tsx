@@ -11,8 +11,8 @@ export default function LoginPage() {
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 font-bold">A</div>
               <div>
-                <div className="text-xl font-bold">ARVAN ALGO</div>
-                <div className="text-[10px] uppercase tracking-[0.2em] text-slate-400">Automated Algo Trading Platform</div>
+                <div className="text-xl font-bold">Arvan Fintech</div>
+                <div className="text-[10px] uppercase tracking-[0.2em] text-slate-400">Trading automation and strategy operations</div>
               </div>
             </div>
             <h1 className="mt-10 text-4xl font-black leading-tight">Welcome back.</h1>
@@ -21,7 +21,7 @@ export default function LoginPage() {
             <div className="mt-10 space-y-4 rounded-3xl border border-slate-700 bg-slate-900/60 p-5">
               <div className="text-sm text-slate-300">Platform status</div>
               <div className="text-2xl font-bold text-green-400">System Online</div>
-              <div className="text-sm text-slate-400">4 live strategies running • 2 alerts monitored</div>
+              <div className="text-sm text-slate-400">Live strategy monitoring is enabled.</div>
             </div>
           </div>
 

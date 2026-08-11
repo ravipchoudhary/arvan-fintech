@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "ARVAN ALGO",
-  description: "Automated Algo Trading Platform",
+  title: "Arvan Fintech",
+  description: "Arvan Fintech trading automation and strategy platform",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

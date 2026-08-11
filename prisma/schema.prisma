@@ -10,6 +10,7 @@ enum UserRole {
   ADMIN
   MANAGER
   EMPLOYEE
+  CLIENT
 }
 
 enum UserStatus {
@@ -25,6 +26,30 @@ enum StrategyStatus {
   COMPLETED
 }
 
+enum OrderStatus {
+  PENDING
+  FILLED
+  CANCELED
+}
+
+enum PositionType {
+  BUY
+  SELL
+}
+
+enum BrokerConnectionStatus {
+  CONNECTED
+  DISCONNECTED
+}
+
+enum NotificationType {
+  TRADE
+  STRATEGY
+  RISK
+  BROKER
+  SYSTEM
+}
+
 model User {
   id           String     @id @default(cuid())
   name         String
@@ -35,10 +60,29 @@ model User {
   status       UserStatus @default(ACTIVE)
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
+  // manager relationship (optional)
+  managerId    String?
+  manager      User?      @relation("ManagerToUsers", fields: [managerId], references: [id])
+  managedUsers User[]     @relation("ManagerToUsers")
+
+  // domain relations
+  followUps        FollowUp[]
+  employeeSales    Sale[]     @relation("EmployeeSales")
+  clientSales      Sale[]     @relation("ClientSales")
+  targets          Target[]
+  activities       ActivityLog[]
+  strategies       Strategy[]
+  orders           Order[]
+  positions        Position[]
+  notifications    Notification[]
+  brokerConnections BrokerConnection[]
+  riskSettings     RiskSetting[]
 }
 
 model Strategy {
   id          String         @id @default(cuid())
+  client      User?          @relation(fields: [clientId], references: [id])
+  clientId    String?
   name        String
   status      StrategyStatus @default(DRAFT)
   type        String
@@ -59,4 +103,125 @@ model Broker {
   createdAt   DateTime @default(now())
   connectedAt DateTime?
   updatedAt   DateTime?
+  connections BrokerConnection[]
+}
+
+model FollowUp {
+  id          String   @id @default(cuid())
+  employee    User     @relation(fields: [employeeId], references: [id])
+  employeeId  String
+  clientId    String?
+  clientName  String?
+  type        String   // e.g., Call, Email, Meeting
+  notes       String?
+  status      String   @default("PENDING")
+  scheduledAt DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Sale {
+  id          String   @id @default(cuid())
+  employee    User     @relation("EmployeeSales", fields: [employeeId], references: [id])
+  employeeId  String
+  clientId    String?
+  client      User?    @relation("ClientSales", fields: [clientId], references: [id])
+  amount      Float
+  currency    String   @default("INR")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Target {
+  id          String   @id @default(cuid())
+  employee    User     @relation(fields: [employeeId], references: [id])
+  employeeId  String
+  month       Int
+  year        Int
+  amount      Float
+  achieved    Float    @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ActivityLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  verb      String
+  detail    String?
+  meta      Json?
+  createdAt DateTime @default(now())
+}
+
+model Order {
+  id         String      @id @default(cuid())
+  client     User        @relation(fields: [clientId], references: [id])
+  clientId   String
+  symbol     String
+  side       String
+  quantity   Int
+  price      Float
+  status     OrderStatus @default(PENDING)
+  pnl        Float       @default(0)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model Position {
+  id          String       @id @default(cuid())
+  client      User         @relation(fields: [clientId], references: [id])
+  clientId    String
+  symbol      String
+  type        PositionType
+  quantity    Int
+  avgPrice    Float
+  ltp         Float
+  pnl         Float
+  pnlPct      Float
+  status      String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model BrokerConnection {
+  id           String                  @id @default(cuid())
+  client       User                    @relation(fields: [clientId], references: [id])
+  clientId     String
+  broker       Broker                  @relation(fields: [brokerId], references: [id])
+  brokerId     String
+  accountId    String
+  status       BrokerConnectionStatus  @default(CONNECTED)
+  apiStatus    String?
+  totpEnabled  Boolean                 @default(false)
+  lastSync     DateTime?
+  createdAt    DateTime                @default(now())
+  updatedAt    DateTime                @updatedAt
+}
+
+model Notification {
+  id         String           @id @default(cuid())
+  client     User             @relation(fields: [clientId], references: [id])
+  clientId   String
+  type       NotificationType
+  message    String
+  unread     Boolean          @default(true)
+  createdAt  DateTime         @default(now())
+}
+
+model RiskSetting {
+  id              String   @id @default(cuid())
+  client          User     @relation(fields: [clientId], references: [id])
+  clientId        String
+  dailyLossLimit  Float
+  todayLoss       Float    @default(0)
+  usagePercent    Float    @default(0)
+  maxDrawdown     Float    @default(0)
+  currentDrawdown Float    @default(0)
+  openPositions   Int      @default(0)
+  exposure        Float    @default(0)
+  maxExposure     Float    @default(0)
+  status          String   @default("SAFE")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }

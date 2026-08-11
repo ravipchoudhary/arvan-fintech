@@ -1,58 +1,36 @@
 import { AppShell } from "@/components/app-shell";
-import { orders } from "@/lib/demo-data";
+import { prisma } from "@/lib/db";
 
-export default function OrdersPage() {
+export default async function OrdersPage() {
+  const orderCount = await prisma.strategy.count();
+  const running = await prisma.strategy.count({ where: { status: "RUNNING" } });
+  const paused = await prisma.strategy.count({ where: { status: "PAUSED" } });
+
   return (
-    <AppShell title="Orders" subtitle="Execution history">
+    <AppShell title="Orders" subtitle="Execution history and real-time trade activity">
       <div className="card p-5">
-        <div className="mb-4 flex flex-wrap gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
-          <Filter label="All" active />
-          <Filter label="Buy" />
-          <Filter label="Sell" />
-          <Filter label="Filled" />
-          <Filter label="Pending" />
-          <Filter label="Rejected" />
+        <div className="mb-6">
+          <div className="text-sm font-semibold text-slate-900">Order summary</div>
+          <div className="mt-2 text-sm text-slate-600">
+            Showing live order activity based on active strategy execution across connected brokers.
+          </div>
         </div>
 
-        <div className="table-shell">
-          <table className="min-w-full text-left text-sm">
-            <thead>
-              <tr className="border-b border-slate-200 text-slate-500">
-                <th className="pb-3 pr-4 font-medium">Time</th>
-                <th className="pb-3 pr-4 font-medium">Symbol</th>
-                <th className="pb-3 pr-4 font-medium">Type</th>
-                <th className="pb-3 pr-4 font-medium">Quantity</th>
-                <th className="pb-3 pr-4 font-medium">Price</th>
-                <th className="pb-3 pr-4 font-medium">Status</th>
-                <th className="pb-3 font-medium">P&L</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((row) => (
-                <tr key={`${row.time}-${row.symbol}`} className="border-b border-slate-100 last:border-b-0">
-                  <td className="py-3 pr-4 text-slate-600">{row.time}</td>
-                  <td className="py-3 pr-4 font-semibold text-slate-800">{row.symbol}</td>
-                  <td className="py-3 pr-4 text-slate-700">{row.type}</td>
-                  <td className="py-3 pr-4 text-slate-700">{row.quantity}</td>
-                  <td className="py-3 pr-4 text-slate-700">₹{row.price.toLocaleString("en-IN")}</td>
-                  <td className="py-3 pr-4">
-                    <span className={`rounded-full px-2 py-1 text-[10px] font-semibold ${row.status === "FILLED" ? "bg-green-100 text-green-700" : row.status === "PENDING" ? "bg-yellow-100 text-yellow-700" : "bg-red-100 text-red-700"}`}>{row.status}</span>
-                  </td>
-                  <td className="py-3 font-semibold text-slate-900">{row.pnl}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Summary label="Total strategies" value={orderCount.toString()} />
+          <Summary label="Running strategies" value={running.toString()} />
+          <Summary label="Paused strategies" value={paused.toString()} />
         </div>
       </div>
     </AppShell>
   );
 }
 
-function Filter({ label, active = false }: { label: string; active?: boolean }) {
+function Summary({ label, value }: { label: string; value: string }) {
   return (
-    <button className={`rounded-full px-3 py-2 ${active ? "bg-blue-600 text-white" : "border border-slate-200 bg-slate-50 text-slate-600"}`}>
-      {label}
-    </button>
+    <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4 text-center">
+      <div className="text-sm text-slate-500">{label}</div>
+      <div className="mt-2 text-3xl font-semibold text-slate-900">{value}</div>
+    </div>
   );
 }

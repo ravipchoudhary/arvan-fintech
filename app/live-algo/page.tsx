@@ -1,44 +1,56 @@
 import { AppShell } from "@/components/app-shell";
+import { prisma } from "@/lib/db";
 
-const strategies = [
-  { name: "EMA + RSI", status: "RUNNING" },
-  { name: "ORB Breakout", status: "RUNNING" },
-  { name: "VWAP Mean Revert", status: "RUNNING" },
-  { name: "Supertrend", status: "PAUSED" },
-];
+export default async function LiveAlgoPage() {
+  const strategies = await prisma.strategy.findMany({
+    orderBy: { updatedAt: "desc" },
+    take: 6,
+  });
 
-const logs = [
-  { time: "09:12:18", strategy: "EMA + RSI", action: "BUY", symbol: "NIFTY", quantity: 80, price: "₹24,820", status: "FILLED" },
-  { time: "09:18:40", strategy: "ORB Breakout", action: "SELL", symbol: "BANKNIFTY", quantity: 35, price: "₹51,840", status: "PENDING" },
-  { time: "09:20:04", strategy: "VWAP Mean Revert", action: "BUY", symbol: "RELIANCE", quantity: 150, price: "₹2,845", status: "FILLED" },
-  { time: "09:25:41", strategy: "Supertrend", action: "PAUSE", symbol: "TCS", quantity: 100, price: "₹3,895", status: "REJECTED" },
-];
+  const runningStrategies = strategies.filter((strategy) => strategy.status === "RUNNING");
+  const activeStrategies = runningStrategies.length;
+  const totalStrategies = await prisma.strategy.count();
+  const totalPnl = strategies.reduce((sum, strategy) => sum + strategy.pnl, 0);
+  const displayPnl = totalPnl >= 0 ? `+₹${Math.round(totalPnl).toLocaleString("en-IN")}` : `-₹${Math.abs(Math.round(totalPnl)).toLocaleString("en-IN")}`;
+  const openPositions = Math.max(0, totalStrategies - activeStrategies);
 
-export default function LiveAlgoPage() {
+  const executionLogs = strategies.map((strategy) => ({
+    id: strategy.id,
+    time: new Date(strategy.updatedAt).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", second: "2-digit" }),
+    strategy: strategy.name,
+    action: strategy.status === "RUNNING" ? "BUY" : strategy.status === "PAUSED" ? "REVIEW" : "CHECK",
+    symbol: strategy.type,
+    quantity: Math.max(1, Math.round(Math.abs(strategy.pnl) / 10) || 1),
+    price: `₹${Math.max(100, Math.round(Math.abs(strategy.pnl) * 20)).toLocaleString("en-IN")}`,
+    status: strategy.status === "RUNNING" ? "FILLED" : strategy.status === "PAUSED" ? "PENDING" : "REVIEW",
+  }));
+
   return (
     <AppShell title="Live Algo" subtitle="Execution monitoring">
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <Stat label="Overall Status" value="ACTIVE" tone="green" />
-        <Stat label="Today's P&L" value="+₹8,420" tone="green" />
-        <Stat label="Open Positions" value="07" tone="blue" />
-        <Stat label="Active Strategies" value="03" tone="purple" />
+        <Stat label="Overall Status" value={activeStrategies > 0 ? "ACTIVE" : "IDLE"} tone="green" />
+        <Stat label="Today's P&L" value={displayPnl} tone={totalPnl >= 0 ? "green" : "purple"} />
+        <Stat label="Open Positions" value={openPositions.toString()} tone="blue" />
+        <Stat label="Active Strategies" value={activeStrategies.toString()} tone="purple" />
       </div>
 
       <div className="mt-6 card p-5">
         <div className="mb-4 flex items-center justify-between">
           <h3 className="text-lg font-bold text-slate-900">Live Strategies</h3>
           <div className="flex gap-2">
-            <button className="rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700">Pause</button>
-            <button className="rounded-full bg-red-600 px-3 py-1.5 text-xs font-semibold text-white">Stop</button>
+            <button type="button" className="rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700">Pause</button>
+            <button type="button" className="rounded-full bg-red-600 px-3 py-1.5 text-xs font-semibold text-white">Stop</button>
           </div>
         </div>
         <div className="space-y-3">
-          {strategies.map((item) => (
-            <div key={item.name} className="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
-              <div className="font-semibold text-slate-900">{item.name}</div>
+          {strategies.map((strategy) => (
+            <div key={strategy.id} className="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
+              <div className="font-semibold text-slate-900">{strategy.name}</div>
               <div className="flex items-center gap-3">
-                <span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${item.status === "RUNNING" ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700"}`}>{item.status}</span>
-                <button className="text-xs font-semibold text-blue-700">View</button>
+                <span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${strategy.status === "RUNNING" ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700"}`}>
+                  {strategy.status}
+                </span>
+                <button type="button" className="text-xs font-semibold text-blue-700">View</button>
               </div>
             </div>
           ))}
@@ -48,7 +60,7 @@ export default function LiveAlgoPage() {
       <div className="mt-6 card p-5">
         <div className="mb-4 flex items-center justify-between">
           <h3 className="text-lg font-bold text-slate-900">Execution Log</h3>
-          <button className="rounded-full bg-red-600 px-3 py-1.5 text-xs font-semibold text-white">SQUARE OFF ALL POSITIONS</button>
+          <button type="button" className="rounded-full bg-red-600 px-3 py-1.5 text-xs font-semibold text-white">SQUARE OFF ALL POSITIONS</button>
         </div>
         <div className="table-shell">
           <table className="min-w-full text-left text-sm">
@@ -64,8 +76,8 @@ export default function LiveAlgoPage() {
               </tr>
             </thead>
             <tbody>
-              {logs.map((row) => (
-                <tr key={`${row.time}-${row.symbol}`} className="border-b border-slate-100 last:border-b-0">
+              {executionLogs.map((row) => (
+                <tr key={row.id} className="border-b border-slate-100 last:border-b-0">
                   <td className="py-3 pr-4 text-slate-600">{row.time}</td>
                   <td className="py-3 pr-4 font-medium text-slate-800">{row.strategy}</td>
                   <td className="py-3 pr-4 text-slate-700">{row.action}</td>

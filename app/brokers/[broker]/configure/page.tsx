@@ -4,10 +4,11 @@ import { notFound } from "next/navigation";
 
 const validBrokers = ["zerodha", "angel-one", "upstox", "icici-direct", "fyers"];
 
-type Props = { params: { broker: string | string[] } };
+type Props = { params: Promise<{ broker: string | string[] }> };
 
 export default async function BrokerConfigurePage({ params }: Props) {
-  const broker = Array.isArray(params.broker) ? params.broker[0] : params.broker;
+  const resolvedParams = await params;
+  const broker = Array.isArray(resolvedParams.broker) ? resolvedParams.broker[0] : resolvedParams.broker;
 
   if (!broker || !validBrokers.includes(broker)) {
     notFound();

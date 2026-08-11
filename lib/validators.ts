@@ -17,7 +17,7 @@ export const signupSchema = z.object({
 
 export const loginSchema = z.object({
   emailOrPhone: z.string().min(3),
-  password: z.string().min(8),
+  password: z.string().min(1),
 });
 
 export const createEmployeeSchema = z.object({
@@ -36,7 +36,7 @@ export const updateEmployeeSchema = z.object({
   phone: z.string().min(10),
   role: z.enum(["ADMIN", "MANAGER", "EMPLOYEE"]),
   status: z.enum(["ACTIVE", "INACTIVE", "PENDING"]),
-  password: z.string().min(8).optional(),
+  password: z.string().optional(),
 });
 
 export const strategySchema = z.object({

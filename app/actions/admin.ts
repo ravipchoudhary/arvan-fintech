@@ -64,7 +64,8 @@ export async function updateEmployeeAction(formData: FormData) {
     throw new Error(parsed.error.issues[0]?.message ?? "Invalid employee data.");
   }
 
-  const { id, name, email, phone, role, status, password } = parsed.data;
+  const { id, name, email, phone, role, status } = parsed.data;
+  const password = String(data.password || "").trim();
 
   const existingUser = await prisma.user.findFirst({
     where: {
@@ -92,7 +93,7 @@ export async function updateEmployeeAction(formData: FormData) {
     status,
   };
 
-  if (password) {
+  if (password.length > 0) {
     updateData.passwordHash = await bcrypt.hash(password, 10);
   }
 
