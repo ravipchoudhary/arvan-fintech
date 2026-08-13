@@ -65,7 +65,7 @@ export function PublicShell({
 
       <footer className="border-t border-white/10 bg-slate-950/90">
         <div className="mx-auto max-w-7xl px-5 py-12 sm:py-16 lg:px-8 lg:py-20">
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
             <div>
               <BrandLogo withLabel label="Arvan Fintech" subtitle="Trading automation and strategy operations" className="mb-4" />
               <p className="mt-3 text-sm leading-7 text-slate-400">A modern fintech platform for strategy automation, analytics, risk controls and broker connectivity.</p>
@@ -73,6 +73,40 @@ export function PublicShell({
             <FooterColumn title="Services" links={[{ href: "/services", label: "Algo Trading" }, { href: "/broker-api-integration", label: "API Bridge" }, { href: "/analytics", label: "Analytics" }, { href: "/risk-management", label: "Risk Management" }]} />
             <FooterColumn title="Company" links={[{ href: "/about", label: "About" }, { href: "/pricing", label: "Pricing" }, { href: "/blog", label: "Blog" }, { href: "/contact", label: "Contact" }]} />
             <FooterColumn title="Resources" links={[{ href: "/faq", label: "FAQ" }, { href: "/privacy-policy", label: "Privacy Policy" }, { href: "/terms-and-conditions", label: "Terms" }, { href: "/disclaimer", label: "Disclaimer" }]} />
+            <div>
+              <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">Contact</h3>
+              <div className="mt-4 space-y-4">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.1em] text-slate-500">Email</p>
+                  <a
+                    href="mailto:info@arvanfintech.com"
+                    className="mt-1 inline-block text-sm text-slate-300 hover:text-blue-300 transition"
+                  >
+                    info@arvanfintech.com
+                  </a>
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-[0.1em] text-slate-500">Phone</p>
+                  <a
+                    href="tel:8429359030"
+                    className="mt-1 inline-block text-sm text-slate-300 hover:text-blue-300 transition"
+                  >
+                    8429359030
+                  </a>
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-[0.1em] text-slate-500">Address</p>
+                  <p className="mt-1 text-sm text-slate-300">Greater Noida, Uttar Pradesh</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Divider */}
+          <div className="mt-12 border-t border-white/10 pt-8">
+            <div className="text-center text-xs text-slate-500">
+              <p>&copy; 2026 ARVAN FINTECH. All rights reserved.</p>
+            </div>
           </div>
         </div>
       </footer>
@@ -170,6 +204,7 @@ export function PricingCard({
   features,
   cta,
   accent,
+  onCta,
 }: {
   title: string;
   price: string;
@@ -177,6 +212,7 @@ export function PricingCard({
   features: string[];
   cta: string;
   accent?: boolean;
+  onCta?: () => void;
 }) {
   return (
     <div className={`rounded-[28px] border p-6 ${accent ? "border-blue-400/30 bg-blue-500/10" : "border-white/10 bg-slate-950/80"}`}>
@@ -196,7 +232,11 @@ export function PricingCard({
         ))}
       </ul>
       <div className="mt-6">
-        <button type="button" className={`w-full rounded-full px-5 py-3 text-sm font-semibold transition ${accent ? "bg-blue-500 text-white hover:bg-blue-400" : "bg-white/5 text-white hover:bg-white/10"}`}>
+        <button 
+          type="button"
+          onClick={onCta}
+          className={`w-full rounded-full px-5 py-3 text-sm font-semibold transition ${accent ? "bg-blue-500 text-white hover:bg-blue-400" : "bg-white/5 text-white hover:bg-white/10"}`}
+        >
           {cta}
         </button>
       </div>

@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { BrandLogo } from "@/components/brand-logo";
 import { publicNavItems } from "@/lib/navigation";
 import { Menu, X } from "lucide-react";
 
@@ -34,15 +33,15 @@ export default function PublicShellNav() {
     <div className="relative">
       {mobileMenuOpen ? <div className="fixed inset-0 z-30 bg-black/50 md:hidden" onClick={closeMobileMenu} /> : null}
       <header className="border-b border-white/10 bg-[#07111f]/95 backdrop-blur relative z-40">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
-          <Link href="/" className="flex items-center gap-3">
-            <BrandLogo
-              withLabel
-              label="Arvan Fintech"
-              subtitle="Trading automation and strategy operations"
-              labelClassName="text-white"
-              subtitleClassName="text-slate-300"
-            />
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3 lg:px-8">
+          <Link href="/" className="flex items-center gap-2 flex-shrink-0">
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white p-1.5 shadow-md">
+              <img src="/arvan-logo.png" alt="Arvan Fintech" className="h-full w-full object-contain" />
+            </div>
+            <div className="hidden sm:flex flex-col leading-tight">
+              <span className="text-sm font-bold tracking-tight text-white">ARVAN FINTECH</span>
+              <span className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Trading • Automation</span>
+            </div>
           </Link>
 
           <nav className="hidden items-center gap-6 text-sm text-slate-300 md:flex">
@@ -69,18 +68,18 @@ export default function PublicShellNav() {
       </header>
 
       <div className={`fixed inset-x-0 top-0 z-40 h-full w-full overflow-y-auto bg-slate-950/95 transition-transform duration-300 md:hidden ${mobileMenuOpen ? "translate-y-0" : "-translate-y-full"}`}>
-        <div className="mx-auto max-w-7xl px-5 py-4">
+        <div className="mx-auto max-w-7xl px-5 py-3">
           <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white p-2">
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-white p-1.5">
                 <img src="/arvan-logo.png" alt="Arvan Fintech" className="h-full w-full object-contain" />
               </div>
               <div>
-                <div className="text-base font-semibold text-white">ARVAN FINTECH</div>
-                <div className="text-xs uppercase tracking-[0.24em] text-slate-400">Trading automation</div>
+                <div className="text-sm font-bold tracking-tight text-white">ARVAN FINTECH</div>
+                <div className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Trading • Automation</div>
               </div>
             </div>
-            <button type="button" onClick={closeMobileMenu} className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/20 text-white">
+            <button type="button" onClick={closeMobileMenu} className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/20 text-white flex-shrink-0">
               <X className="h-5 w-5" />
             </button>
           </div>

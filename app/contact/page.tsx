@@ -7,9 +7,17 @@ export default function ContactPage() {
         <div className="rounded-[32px] border border-white/10 bg-slate-900/70 p-6 sm:p-8">
           <SectionHeading eyebrow="Support" title="Let’s talk about your trading workflow" description="Whether you are exploring automation or need a tailored deployment plan, our team can help you get started." />
           <div className="mt-8 space-y-3 text-sm text-slate-400">
-            <div>Email: hello@arvanfintech.com</div>
-            <div>Phone: +91 98765 43210</div>
-            <div>Location: Mumbai, India</div>
+            <div>
+              <a href="mailto:info@arvanfintech.com" className="text-slate-400 hover:text-blue-400 transition">
+                Email: info@arvanfintech.com
+              </a>
+            </div>
+            <div>
+              <a href="tel:8429359030" className="text-slate-400 hover:text-blue-400 transition">
+                Phone: 8429359030
+              </a>
+            </div>
+            <div>Location: Greater Noida, Uttar Pradesh</div>
           </div>
         </div>
         <div className="rounded-[32px] border border-white/10 bg-slate-900/70 p-6 sm:p-8">

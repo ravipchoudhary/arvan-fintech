@@ -1,4 +1,4 @@
-import { ArrowUpRight, BarChart3, BriefcaseBusiness, Building2, CreditCard, Gauge, LayoutDashboard, Shield, Users, Wallet } from "lucide-react";
+import { ArrowUpRight, BarChart3, BriefcaseBusiness, Building2, CreditCard, Gauge, LayoutDashboard, Shield, Users, Wallet, FileText } from "lucide-react";
 
 export const publicNavItems = [
   { href: "/", label: "Home" },
@@ -32,6 +32,7 @@ export const adminNavSections = [
   {
     title: "Administration",
     items: [
+      { href: "/admin/leads", label: "Leads", icon: FileText },
       { href: "/admin/employees", label: "Employees", icon: Users },
       { href: "/admin/clients", label: "Clients / Users", icon: Users },
       { href: "/admin/sales", label: "Sales Management", icon: BarChart3 },
@@ -52,6 +53,7 @@ export const employeeNavSections = [
     title: "Employee Workspace",
     items: [
       { href: "/employee/dashboard", label: "My Dashboard", icon: LayoutDashboard },
+      { href: "/employee/leads", label: "My Leads", icon: FileText },
       { href: "/employee/clients", label: "My Clients", icon: Users },
       { href: "/employee/follow-ups", label: "Follow Ups", icon: Shield },
       { href: "/employee/target", label: "My Target", icon: Gauge },
