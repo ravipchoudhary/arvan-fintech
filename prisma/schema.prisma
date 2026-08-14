@@ -106,6 +106,8 @@ model Strategy {
   status      StrategyStatus @default(DRAFT)
   type        String
   description String?
+  quantity    Int            @default(1)
+  limit       Int            @default(500)
   pnl         Float          @default(0)
   performance Float          @default(0)
   createdAt   DateTime       @default(now())

@@ -4,7 +4,7 @@ const faqs = [
   { question: "What is Arvan Fintech?", answer: "Arvan Fintech is a trading automation and analytics platform that helps teams build strategies, connect broker workflows and monitor trading operations in one place." },
   { question: "What is algorithmic trading?", answer: "Algorithmic trading uses predefined rules to automate trading decisions and execution based on market conditions." },
   { question: "Do I need coding knowledge?", answer: "The platform is designed to support structured strategy workflows, but implementation may require assistance depending on the complexity of the strategy." },
-  { question: "How does strategy backtesting work?", answer: "Backtesting evaluates strategies against historical data so performance and risk can be reviewed before deployment." },
+  { question: "How can I monitor live trading?", answer: "Monitor your live strategies and executions in real-time through the Execution Monitor. Track orders, positions, and P&L as trades execute through your connected broker." },
   { question: "Which brokers are supported?", answer: "Supported brokers depend on the integrations configured in the platform and the existing broker setup." },
   { question: "Can I automate my trading strategy?", answer: "Yes, strategy automation is a core capability, subject to supported integrations and configured risk controls." },
   { question: "What risk controls are available?", answer: "The platform supports exposure controls, drawdown monitoring, position limits and daily loss thresholds." },

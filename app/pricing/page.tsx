@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { PublicShell, SectionHeading, PricingCard } from "@/components/public-site";
+import { PublicShell, SectionHeading } from "@/components/public-site";
+import { PricingCard } from "@/components/pricing-card";
 import LeadEnquiryModal from "@/components/lead-enquiry-modal";
 
 const PRICING_PLANS = [

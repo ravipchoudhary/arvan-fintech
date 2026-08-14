@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { AppShell } from "@/components/app-shell";
 import { EmployeeClientCreateModal } from "@/components/employee-client-create-modal";
 import { createClientForEmployeeAction } from "@/app/actions/auth";
@@ -7,7 +8,9 @@ import { employeeClientCountWhere, employeeClientWhere } from "@/lib/employee";
 
 export default async function EmployeeClientsPage() {
   const session = await getSessionUser();
-  if (!session) return null;
+  if (!session || session.role !== "EMPLOYEE") {
+    redirect("/login");
+  }
 
   const [activeUsers, totalStrategies, connectedBrokers, clients] = await Promise.all([
     prisma.user.count({ where: employeeClientCountWhere(session.id) }),

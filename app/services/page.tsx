@@ -14,7 +14,6 @@ export default function ServicesPage() {
         <FeatureCard icon={Cpu} title="API Bridge" description="Connect supported brokers and exchange data through secure, centralized integrations." />
         <FeatureCard icon={BarChart3} title="Strategy Development" description="Design entry and exit logic with indicators, rules, and risk filters in one place." />
         <FeatureCard icon={Zap} title="Automated Buy & Sell" description="Trigger predefined actions when conditions are met, with monitoring and execution oversight." />
-        <FeatureCard icon={BarChart3} title="Backtesting" description="Evaluate historical performance with benchmark metrics and strategy insights." />
         <FeatureCard icon={ShieldCheck} title="Risk Management" description="Manage exposure, drawdown, position limits and daily loss thresholds in a controlled workflow." />
       </section>
 

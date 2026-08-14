@@ -15,6 +15,7 @@ export async function POST(request: Request) {
   const form = await request.formData();
   const name = String(form.get("name") || "");
   const credentials = String(form.get("credentials") || "");
+  const source = String(form.get("source") || "ADMIN");
 
   if (!name) return NextResponse.json({ success: false, message: "Missing name" }, { status: 400 });
 
@@ -34,7 +35,8 @@ export async function POST(request: Request) {
       },
     });
 
-    return NextResponse.redirect(new URL(`/brokers`, request.url));
+    const redirectPath = source === "CLIENT" ? "/client/broker" : "/brokers";
+    return NextResponse.redirect(new URL(redirectPath, request.url));
   } catch (error) {
     console.error("Broker create error:", error);
     return NextResponse.json({ success: false, message: "Unable to create broker." }, { status: 500 });

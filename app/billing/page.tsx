@@ -2,7 +2,7 @@ import { AppShell } from "@/components/app-shell";
 
 const plans = [
   { name: "Free", price: "₹0", features: ["1 strategy", "Basic analytics"] },
-  { name: "Pro", price: "₹1,999", features: ["Unlimited strategies", "Backtesting", "Risk alerts"] },
+  { name: "Pro", price: "₹1,999", features: ["Unlimited strategies", "Advanced analytics", "Risk alerts"] },
   { name: "Enterprise", price: "Custom", features: ["Multi-team admin", "Payroll", "Custom reports"] },
 ];
 

@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { AppShell } from "@/components/app-shell";
 import { prisma } from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
@@ -6,7 +7,9 @@ import { employeeClientCountWhere, employeeClientCreatedAtWhere, employeeRecordW
 
 export default async function EmployeeDashboardPage() {
   const session = await getSessionUser();
-  if (!session) return null;
+  if (!session || session.role !== "EMPLOYEE") {
+    redirect("/login");
+  }
 
   const now = new Date();
   const month = now.getMonth() + 1;

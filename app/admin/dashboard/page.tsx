@@ -1,8 +1,15 @@
+import { redirect } from "next/navigation";
 import { AppShell } from "@/components/app-shell";
 import { SalesBarChart } from "@/components/charts";
 import { prisma } from "@/lib/db";
+import { getSessionUser } from "@/lib/session";
 
 export default async function AdminDashboardPage() {
+  const session = await getSessionUser();
+  if (!session || session.role !== "ADMIN") {
+    redirect("/login");
+  }
+
   const [totalUsers, totalStrategies, connectedBrokers, runningStrategies, pausedStrategies] = await Promise.all([
     prisma.user.count(),
     prisma.strategy.count(),

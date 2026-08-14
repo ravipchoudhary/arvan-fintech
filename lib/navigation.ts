@@ -18,8 +18,6 @@ export const adminNavSections = [
     items: [
       { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
       { href: "/strategies", label: "Strategies", icon: BarChart3 },
-      { href: "/backtest", label: "Backtest", icon: Gauge },
-      { href: "/live-algo", label: "Live Algo", icon: ArrowUpRight },
       { href: "/orders", label: "Orders", icon: BriefcaseBusiness },
       { href: "/positions", label: "Positions", icon: Wallet },
       { href: "/reports", label: "Reports", icon: BarChart3 },
@@ -68,8 +66,7 @@ export const clientNavSections = [
     items: [
       { href: "/client/dashboard", label: "Dashboard", icon: LayoutDashboard },
       { href: "/client/strategies", label: "My Strategies", icon: BarChart3 },
-      { href: "/client/backtest", label: "Backtest", icon: Gauge },
-      { href: "/client/live-algo", label: "Live Algo", icon: ArrowUpRight },
+      { href: "/client/broker", label: "Connect Broker", icon: Building2 },
       { href: "/client/orders", label: "Orders", icon: BriefcaseBusiness },
       { href: "/client/positions", label: "Positions", icon: Wallet },
     ],

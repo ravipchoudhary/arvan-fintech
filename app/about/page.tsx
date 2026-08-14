@@ -6,7 +6,7 @@ export default function AboutPage() {
   return (
     <PublicShell
       title="Technology That Makes Trading More Systematic"
-      description="Arvan Fintech combines algorithmic trading, strategy development, backtesting, automation, risk controls and analytics into one secure platform."
+      description="Arvan Fintech combines algorithmic trading, strategy development, automation, risk controls and analytics into one secure platform."
       eyebrow="About Arvan Fintech"
       hero={
         <div className="mt-8 flex flex-wrap gap-3">

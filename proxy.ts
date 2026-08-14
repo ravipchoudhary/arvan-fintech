@@ -84,8 +84,6 @@ export const config = {
   matcher: [
     "/dashboard/:path*",
     "/strategies/:path*",
-    "/backtest/:path*",
-    "/live-algo/:path*",
     "/orders/:path*",
     "/positions/:path*",
     "/brokers/:path*",

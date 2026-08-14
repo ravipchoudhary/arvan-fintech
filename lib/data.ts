@@ -1,8 +1,6 @@
 export const navItems = [
   { href: "/dashboard", label: "Dashboard" },
   { href: "/strategies", label: "Strategies" },
-  { href: "/backtest", label: "Backtest" },
-  { href: "/live-algo", label: "Live Algo" },
   { href: "/orders", label: "Orders" },
   { href: "/positions", label: "Positions" },
   { href: "/reports", label: "Reports" },

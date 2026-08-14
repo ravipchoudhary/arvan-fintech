@@ -54,19 +54,14 @@ export function EmployeeForm({ action, defaultValues, submitLabel = "Save Employ
         </div>
         <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3">
           <label className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">Password</label>
-          <div className="relative flex items-center gap-2">
-            <input
-              name="password"
-              type={showPassword ? "text" : "password"}
-              placeholder={isEdit ? "Leave blank to keep current password" : "Create password (min 8 characters)"}
-              className="min-w-0 flex-1 bg-transparent text-sm text-slate-800 outline-none"
-              required={!isEdit}
-              minLength={!isEdit ? 8 : undefined}
-            />
-            <button type="button" className="text-slate-500" onClick={() => setShowPassword((value) => !value)}>
-              {showPassword ? "Hide" : "Show"}
-            </button>
-          </div>
+          <input
+            name="password"
+            type="password"
+            placeholder={isEdit ? "Leave blank to keep current password" : "Create password (min 8 characters)"}
+            className="w-full bg-transparent text-sm text-slate-800 outline-none"
+            required={!isEdit}
+            minLength={!isEdit ? 8 : undefined}
+          />
         </div>
       </div>
 

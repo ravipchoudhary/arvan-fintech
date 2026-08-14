@@ -67,15 +67,14 @@ export default async function HomePage() {
       </section>
 
       <section className="mt-12 sm:mt-16 rounded-[32px] border border-white/10 bg-slate-900/70 p-6 sm:p-8">
-        <SectionHeading eyebrow="How It Works" title="From setup to live monitoring in six steps" description="A streamlined process for onboarding, strategy creation, risk control and deployment." />
+        <SectionHeading eyebrow="How It Works" title="From setup to live monitoring in five steps" description="A streamlined process for onboarding, strategy creation, risk control and deployment." />
         <div className="mt-6 sm:mt-8 grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {[
             ["01", "Create Account", "Register and access the platform with your role-based workspace."],
             ["02", "Connect Broker", "Link supported broker integrations and establish your trading connection."],
             ["03", "Build Strategy", "Create rules, indicators and execution logic for your trading workflow."],
-            ["04", "Backtest", "Validate ideas with historical data and measurable sample metrics."],
-            ["05", "Configure Risk", "Set daily loss, exposure and position limits before deployment."],
-            ["06", "Deploy & Monitor", "Launch strategies and follow performance with live monitoring and alerts."],
+            ["04", "Configure Risk", "Set daily loss, exposure and position limits before deployment."],
+            ["05", "Deploy & Monitor", "Launch strategies and follow performance with live monitoring and alerts."],
           ].map(([number, title, description]) => (
             <div key={title} className="rounded-3xl border border-white/10 bg-slate-950/60 p-5 sm:p-6">
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/10 text-lg font-semibold text-blue-300">{number}</div>

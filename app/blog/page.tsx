@@ -3,7 +3,7 @@ import { PublicShell, SectionHeading } from "@/components/public-site";
 
 const posts = [
   { title: "Algo Trading Basics", category: "Algo Trading", description: "An overview of how systematic automation can structure trading decisions." },
-  { title: "Backtesting With Discipline", category: "Backtesting", description: "How historical evaluation supports better strategy selection and risk planning." },
+  { title: "Risk Management Strategies", category: "Trading", description: "Essential techniques for managing risk and protecting your capital in live trading scenarios." },
   { title: "Risk Management in Automation", category: "Risk Management", description: "Why position sizing and loss controls are essential for sustainable workflows." },
 ];
 
