@@ -33,7 +33,7 @@ export default function LoginPage() {
             </div>
             <LoginForm />
             <div className="mt-5 text-center text-sm text-slate-500">
-              Don&apos;t have an account? <Link href="/signup" className="font-semibold text-blue-600">Sign Up</Link>
+              <Link href="/" className="font-semibold text-blue-600">Back to Home</Link>
             </div>
           </div>
         </div>

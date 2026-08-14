@@ -33,14 +33,14 @@ export default function PublicShellNav() {
     <div className="relative">
       {mobileMenuOpen ? <div className="fixed inset-0 z-30 bg-black/50 md:hidden" onClick={closeMobileMenu} /> : null}
       <header className="border-b border-white/10 bg-[#07111f]/95 backdrop-blur relative z-40">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3 lg:px-8">
-          <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white p-1.5 shadow-md">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3 lg:px-8 gap-3">
+          <Link href="/" className="flex items-center gap-1.5 flex-shrink-0 min-w-0">
+            <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-white p-1 shadow-md flex-shrink-0">
               <img src="/arvan-logo.png" alt="Arvan Fintech" className="h-full w-full object-contain" />
             </div>
-            <div className="hidden sm:flex flex-col leading-tight">
-              <span className="text-sm font-bold tracking-tight text-white">ARVAN FINTECH</span>
-              <span className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Trading • Automation</span>
+            <div className="flex flex-col leading-tight min-w-0">
+              <span className="text-xs sm:text-sm font-bold tracking-tight text-white truncate">ARVAN FINTECH</span>
+              <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.18em] text-slate-400 truncate">Trading • Automation</span>
             </div>
           </Link>
 
@@ -55,9 +55,6 @@ export default function PublicShellNav() {
           <div className="hidden items-center gap-3 md:flex">
             <Link href="/login" className="rounded-full border border-white/15 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-blue-400 hover:text-white">
               Login
-            </Link>
-            <Link href="/signup" className="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-500">
-              Get Started
             </Link>
           </div>
 
@@ -99,9 +96,6 @@ export default function PublicShellNav() {
           <div className="border-t border-white/10 bg-slate-950/70 px-5 py-3">
             <Link href="/login" onClick={closeMobileMenu} className="block rounded-lg px-3 py-2.5 text-sm font-medium text-slate-300 transition hover:bg-white/10 hover:text-white">
               Login
-            </Link>
-            <Link href="/signup" onClick={closeMobileMenu} className="mt-2 block rounded-lg bg-blue-600 px-3 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-blue-500">
-              Get Started
             </Link>
           </div>
         </nav>

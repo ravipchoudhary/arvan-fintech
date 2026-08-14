@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { PublicShell, SectionHeading, PricingCard } from "@/components/public-site";
-import LeadEnquiryForm from "@/components/lead-enquiry-form";
+import LeadEnquiryModal from "@/components/lead-enquiry-modal";
 
 const PRICING_PLANS = [
   {
@@ -107,10 +107,12 @@ export default function PricingPage() {
       </PublicShell>
 
       {selectedPlan && (
-        <LeadEnquiryForm
+        <LeadEnquiryModal
+          isOpen={true}
+          onClose={() => setSelectedPlan(null)}
           selectedPlan={selectedPlan.name}
           planPrice={selectedPlan.price}
-          onClose={() => setSelectedPlan(null)}
+          source="PRICING"
         />
       )}
     </>

@@ -60,6 +60,7 @@ enum LeadStatus {
 
 enum LeadSource {
   PRICING
+  GET_STARTED
   CONTACT_FORM
   REFERRAL
   OTHER
@@ -94,6 +95,7 @@ model User {
   riskSettings     RiskSetting[]
   leadsAssigned    Lead[]              @relation("LeadAssignments")
   leadNotes        LeadNote[]          @relation("LeadNotes")
+  passwordResetToken PasswordResetToken?
 }
 
 model Strategy {
@@ -272,4 +274,19 @@ model LeadNote {
   note      String
   createdAt DateTime @default(now())
 }
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([token])
+}
+
 

@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { ArrowRight, BarChart3, BellRing, Bot, Cpu, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowRight, BarChart3, BellRing, Bot, Cpu } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { PublicShell, FeatureCard, SectionHeading, TestimonialCard } from "@/components/public-site";
+import HomeHeroWithModal from "@/components/home-hero-with-modal";
 
 export default async function HomePage() {
   const [totalStrategies, liveStrategies, connectedBrokers, activeUsers] = await Promise.all([
@@ -16,13 +17,7 @@ export default async function HomePage() {
       title="Smarter Trading. Powerful Automation."
       description="Build, test and automate systematic trading strategies with analytics, risk controls and broker connectivity in one secure operating environment."
       eyebrow="Arvan Fintech"
-      hero={
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-3">
-          <Link href="/signup" className="rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-500 text-center">Get Started</Link>
-          <Link href="/services" className="rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-slate-200 transition hover:border-blue-400 hover:text-white text-center">Explore Services</Link>
-          <Link href="/login" className="rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-slate-200 transition hover:border-blue-400 hover:text-white text-center">Login</Link>
-        </div>
-      }
+      hero={<HomeHeroWithModal />}
     >
       <section className="rounded-[32px] border border-white/10 bg-slate-900/70 p-5 sm:p-8">
         <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -56,21 +51,18 @@ export default async function HomePage() {
           <ul className="mt-4 sm:mt-6 space-y-3 text-sm sm:text-base text-slate-300">
             <li>• Strategy-focused automation</li>
             <li>• Real-time monitoring and alerts</li>
-            <li>• Powerful analytics and reporting</li>
-            <li>• Risk management and broker connectivity</li>
+            <li>• Broker connectivity and APIs</li>
           </ul>
         </div>
       </section>
 
       <section className="mt-12 sm:mt-16">
-        <SectionHeading eyebrow="Services" title="A complete trading workflow for modern teams" description="From strategy creation to execution monitoring and analytics, Arvan Fintech covers the full journey." />
+        <SectionHeading eyebrow="Services" title="A complete trading workflow for modern teams" description="From strategy creation to execution monitoring, Arvan Fintech covers the full journey." />
         <div className="mt-6 sm:mt-8 grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <FeatureCard icon={Bot} title="Algo Trading" description="Automate trading strategies with structured execution workflows and clear oversight." />
           <FeatureCard icon={BarChart3} title="API Bridge" description="Connect supported brokers and trading data through secure centralized integrations." />
           <FeatureCard icon={Cpu} title="Strategy Development" description="Create and refine systematic strategies from rules, indicators and risk settings." />
           <FeatureCard icon={BellRing} title="Automated Buy & Sell" description="Trigger predefined actions when conditions are met with monitoring and control." />
-          <FeatureCard icon={BarChart3} title="Backtesting" description="Review historical performance and improve strategy quality with sample metrics." />
-          <FeatureCard icon={ShieldCheck} title="Risk Management" description="Manage exposure, drawdown and position limits with clear controls." />
         </div>
       </section>
 

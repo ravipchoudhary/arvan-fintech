@@ -67,9 +67,6 @@ export function PublicShell({
             <Link href="/login" className="rounded-full border border-white/15 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-blue-400 hover:text-white">
               Login
             </Link>
-            <Link href="/signup" className="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-500">
-              Get Started
-            </Link>
           </div>
 
           <button type="button" onClick={toggleMobileMenu} className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/20 text-white md:hidden">
@@ -109,9 +106,6 @@ export function PublicShell({
           <div className="border-t border-white/10 bg-slate-950/70 px-5 py-3">
             <Link href="/login" onClick={closeMobileMenu} className="block rounded-lg px-3 py-2.5 text-sm font-medium text-slate-300 transition hover:bg-white/10 hover:text-white">
               Login
-            </Link>
-            <Link href="/signup" onClick={closeMobileMenu} className="mt-2 block rounded-lg bg-blue-600 px-3 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-blue-500">
-              Get Started
             </Link>
           </div>
         </nav>
@@ -165,10 +159,18 @@ export function PublicShell({
         <div className="mx-auto max-w-7xl px-5 py-12 sm:py-16 lg:px-8 lg:py-20">
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             <div>
-              <BrandLogo withLabel label="Arvan Fintech" subtitle="Trading automation and strategy operations" className="mb-4" />
+              <div className="flex items-center gap-2 mb-4">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white p-1 shadow-md flex-shrink-0">
+                  <img src="/arvan-logo.png" alt="Arvan Fintech" className="h-full w-full object-contain" />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-white">ARVAN FINTECH</p>
+                  <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Trading • Automation</p>
+                </div>
+              </div>
               <p className="mt-3 text-sm leading-7 text-slate-400">A modern fintech platform for strategy automation, analytics, risk controls and broker connectivity.</p>
             </div>
-            <FooterColumn title="Services" links={[{ href: "/services", label: "Algo Trading" }, { href: "/broker-api-integration", label: "API Bridge" }, { href: "/analytics", label: "Analytics" }, { href: "/risk-management", label: "Risk Management" }]} />
+            <FooterColumn title="Services" links={[{ href: "/services", label: "Algo Trading" }, { href: "/broker-api-integration", label: "API Bridge" }, { href: "/features", label: "Features" }]} />
             <FooterColumn title="Company" links={[{ href: "/about", label: "About" }, { href: "/pricing", label: "Pricing" }, { href: "/blog", label: "Blog" }, { href: "/contact", label: "Contact" }]} />
             <FooterColumn title="Resources" links={[{ href: "/faq", label: "FAQ" }, { href: "/privacy-policy", label: "Privacy Policy" }, { href: "/terms-and-conditions", label: "Terms" }, { href: "/disclaimer", label: "Disclaimer" }]} />
           </div>

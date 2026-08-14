@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
         selectedPlan: body.selectedPlan,
         planPrice: body.planPrice || 0,
         status: "NEW",
-        source: "PRICING",
+        source: body.source || "PRICING",
       },
     });
 

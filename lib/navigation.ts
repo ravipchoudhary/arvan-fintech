@@ -7,8 +7,6 @@ export const publicNavItems = [
   { href: "/features", label: "Features" },
   { href: "/how-it-works", label: "How It Works" },
   { href: "/pricing", label: "Pricing" },
-  { href: "/analytics", label: "Analytics" },
-  { href: "/risk-management", label: "Risk Management" },
   { href: "/faq", label: "FAQ" },
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },

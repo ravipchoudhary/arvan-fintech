@@ -8,6 +8,7 @@ interface LeadFormProps {
   planPrice: number;
   onClose: () => void;
   onSuccess?: () => void;
+  source?: "PRICING" | "GET_STARTED";
 }
 
 export default function LeadEnquiryForm({
@@ -15,6 +16,7 @@ export default function LeadEnquiryForm({
   planPrice,
   onClose,
   onSuccess,
+  source = "PRICING",
 }: LeadFormProps) {
   const [formData, setFormData] = useState({
     name: "",
@@ -79,6 +81,7 @@ export default function LeadEnquiryForm({
           ...formData,
           selectedPlan,
           planPrice,
+          source,
         }),
       });
 
