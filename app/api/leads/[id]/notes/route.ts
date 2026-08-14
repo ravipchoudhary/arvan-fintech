@@ -32,6 +32,7 @@ export async function POST(
     // Authorization check
     if (
       sessionUser.role === "EMPLOYEE" &&
+      lead.assignedToId !== null &&
       lead.assignedToId !== sessionUser.id
     ) {
       return NextResponse.json(

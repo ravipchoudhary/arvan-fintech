@@ -5,6 +5,22 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { createEmployeeSchema, updateEmployeeSchema } from "@/lib/validators";
 
+async function generateArvanEmployeeId() {
+  const lastEmployee = await prisma.user.findFirst({
+    where: { id: { startsWith: "ARVAN-" } },
+    orderBy: { createdAt: "desc" },
+    select: { id: true },
+  });
+
+  if (!lastEmployee) {
+    return "ARVAN-EMP-0001";
+  }
+
+  const match = lastEmployee.id.match(/ARVAN-EMP-(\d+)/);
+  const nextNumber = match ? Number(match[1]) + 1 : 1;
+  return `ARVAN-EMP-${String(nextNumber).padStart(4, "0")}`;
+}
+
 export async function createEmployeeAction(formData: FormData) {
   const data = Object.fromEntries(formData.entries());
   const parsed = createEmployeeSchema.safeParse({
@@ -24,7 +40,12 @@ export async function createEmployeeAction(formData: FormData) {
 
   const existingUser = await prisma.user.findFirst({
     where: {
-      OR: [{ email }, { phone }],
+      AND: [
+        { role: { in: ["ADMIN", "MANAGER", "EMPLOYEE"] } },
+        {
+          OR: [{ email }, { phone }],
+        },
+      ],
     },
   });
 
@@ -34,8 +55,11 @@ export async function createEmployeeAction(formData: FormData) {
 
   const passwordHash = await bcrypt.hash(password, 10);
 
+  const employeeId = await generateArvanEmployeeId();
+
   await prisma.user.create({
     data: {
+      id: employeeId,
       name,
       email,
       phone,
@@ -69,8 +93,15 @@ export async function updateEmployeeAction(formData: FormData) {
 
   const existingUser = await prisma.user.findFirst({
     where: {
-      OR: [{ email }, { phone }],
-      NOT: { id },
+      AND: [
+        { role: { in: ["ADMIN", "MANAGER", "EMPLOYEE"] } },
+        {
+          OR: [{ email }, { phone }],
+        },
+        {
+          NOT: { id },
+        },
+      ],
     },
   });
 

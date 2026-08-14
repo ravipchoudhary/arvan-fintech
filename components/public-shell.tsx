@@ -124,10 +124,6 @@ export function PublicShell({
                 </div>
                 <div className="hidden lg:block rounded-[32px] border border-white/10 bg-slate-900/70 p-5 shadow-2xl shadow-black/30">
                   <div className="rounded-[24px] border border-white/10 bg-gradient-to-br from-slate-900 via-slate-900 to-blue-950 p-6">
-                    <div className="flex items-center justify-between text-sm text-slate-300">
-                      <span>Demo portfolio overview</span>
-                      <span className="rounded-full border border-blue-400/20 bg-blue-500/10 px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-blue-200">Visual only</span>
-                    </div>
                     <div className="mt-6 grid gap-4 sm:grid-cols-2">
                       <HeroMetricCard label="Portfolio Value" value="₹12,48,500" delta="Live view" />
                       <HeroMetricCard label="Today P&amp;L" value="+₹8,420" delta="Positive" />
@@ -137,7 +133,6 @@ export function PublicShell({
                     <div className="mt-6 rounded-2xl border border-white/10 bg-slate-950/70 p-4">
                       <div className="mb-3 flex items-center justify-between text-sm text-slate-300">
                         <span>Portfolio performance</span>
-                        <span className="text-blue-300">Demo chart</span>
                       </div>
                       <div className="flex h-24 items-end gap-2">
                         {[44, 72, 56, 86, 92, 78, 98].map((height, index) => (
@@ -170,7 +165,7 @@ export function PublicShell({
               </div>
               <p className="mt-3 text-sm leading-7 text-slate-400">A modern fintech platform for strategy automation, analytics, risk controls and broker connectivity.</p>
             </div>
-            <FooterColumn title="Services" links={[{ href: "/services", label: "Algo Trading" }, { href: "/broker-api-integration", label: "API Bridge" }, { href: "/features", label: "Features" }]} />
+            <FooterColumn title="Services" links={[{ href: "/services", label: "Algo Trading" }, { href: "/strategies", label: "Strategy Builder" }, { href: "/features", label: "Features" }]} />
             <FooterColumn title="Company" links={[{ href: "/about", label: "About" }, { href: "/pricing", label: "Pricing" }, { href: "/blog", label: "Blog" }, { href: "/contact", label: "Contact" }]} />
             <FooterColumn title="Resources" links={[{ href: "/faq", label: "FAQ" }, { href: "/privacy-policy", label: "Privacy Policy" }, { href: "/terms-and-conditions", label: "Terms" }, { href: "/disclaimer", label: "Disclaimer" }]} />
           </div>

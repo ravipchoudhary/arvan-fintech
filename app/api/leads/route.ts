@@ -119,10 +119,12 @@ export async function GET(request: NextRequest) {
 
     // Role-based filtering
     if (sessionUser.role === "EMPLOYEE") {
-      where.assignedToId = sessionUser.id;
+      where.OR = [
+        { assignedToId: sessionUser.id },
+        { assignedToId: null },
+      ];
     } else if (sessionUser.role === "MANAGER") {
-      // Manager can see their assigned employees' leads (if such logic exists)
-      // For now, managers can see all leads in their scope
+      // Managers can view all leads, including unassigned ones.
     } else if (sessionUser.role !== "ADMIN") {
       // Only admin/manager/employee can access leads
       return NextResponse.json(

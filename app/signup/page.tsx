@@ -11,7 +11,13 @@ export default function SignupPage() {
         <div className="grid md:grid-cols-[0.9fr_1.1fr]">
           <div className="bg-[#071526] p-8 text-white md:p-12">
             <div className="flex items-center gap-3">
-              <BrandLogo withLabel label="Arvan Fintech" subtitle="Trading automation and strategy operations" />
+              <BrandLogo
+                withLabel
+                label="Arvan Fintech"
+                subtitle="Trading automation and strategy operations"
+                labelClassName="text-white"
+                subtitleClassName="text-slate-300"
+              />
             </div>
             <h1 className="mt-10 text-4xl font-black leading-tight">Start building smarter trades.</h1>
             <p className="mt-4 max-w-md text-slate-300">Launch strategy workflows, automate execution and track performance in real time.</p>

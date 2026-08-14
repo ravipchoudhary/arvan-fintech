@@ -39,6 +39,7 @@ export async function GET(
     // Authorization check
     if (
       sessionUser.role === "EMPLOYEE" &&
+      lead.assignedToId !== null &&
       lead.assignedToId !== sessionUser.id
     ) {
       return NextResponse.json(
@@ -85,6 +86,7 @@ export async function PATCH(
     // Authorization check
     if (
       sessionUser.role === "EMPLOYEE" &&
+      lead.assignedToId !== null &&
       lead.assignedToId !== sessionUser.id
     ) {
       return NextResponse.json(

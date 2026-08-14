@@ -59,10 +59,10 @@ export function EmployeeLeadsClient() {
       });
 
       if (response.ok) {
+        setSelectedLead((current) =>
+          current && current.id === leadId ? { ...current, status: newStatus } : current
+        );
         fetchLeads();
-        if (selectedLead?.id === leadId) {
-          setSelectedLead(null);
-        }
       }
     } catch (error) {
       console.error("Failed to update status:", error);
@@ -80,6 +80,17 @@ export function EmployeeLeadsClient() {
       });
 
       if (response.ok) {
+        const result = await response.json();
+        setSelectedLead((current) =>
+          current
+            ? {
+                ...current,
+                notes: result.note
+                  ? [result.note, ...current.notes]
+                  : current.notes,
+              }
+            : current
+        );
         setNewNote("");
         fetchLeads();
       }

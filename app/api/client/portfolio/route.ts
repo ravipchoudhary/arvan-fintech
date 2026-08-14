@@ -40,8 +40,8 @@ export async function GET(request: NextRequest) {
 
     if (positions.length > 0) {
       positions.forEach((pos) => {
-        portfolioValue += pos.currentValue || 0;
-        totalPnL += pos.unrealizedPnL || 0;
+        portfolioValue += (pos.quantity * pos.ltp) || 0;
+        totalPnL += pos.pnl || 0;
       });
     }
 

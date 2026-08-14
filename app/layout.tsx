@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: '/arvan-logo.png',
+    shortcut: '/arvan-logo.png',
     apple: '/arvan-logo.png',
   },
 };
