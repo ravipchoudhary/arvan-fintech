@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { getDashboardPathForRole } from "@/lib/auth";
+import { getDashboardPathForRole, getPublicOrigin } from "@/lib/auth";
 import { setSession } from "@/lib/session";
 import { loginSchema } from "@/lib/validators";
 
@@ -39,12 +39,13 @@ export async function POST(request: Request) {
     });
 
     const redirectPath = getDashboardPathForRole(user.role);
+    const redirectUrl = `${getPublicOrigin(request)}${redirectPath}`;
 
     if (request.headers.get("accept")?.includes("application/json")) {
-      return NextResponse.json({ success: true, redirect: redirectPath });
+      return NextResponse.json({ success: true, redirect: redirectUrl });
     }
 
-    return NextResponse.redirect(new URL(redirectPath, request.url));
+    return NextResponse.redirect(redirectUrl);
   } catch (error) {
     console.error("Login API error:", error);
     if (request.headers.get("accept")?.includes("application/json")) {

@@ -8,15 +8,30 @@ export default async function HomePage() {
   let totalStrategies = 0;
   let liveStrategies = 0;
   let connectedBrokers = 0;
-  let activeUsers = 0;
+  let activeTrades = 0;
+  let totalPortfolioValue = 0;
+  let overallPnl = 0;
+  let riskUsage = 0;
 
   try {
-    [totalStrategies, liveStrategies, connectedBrokers, activeUsers] = await Promise.all([
+    const [strategyCount, runningStrategyCount, brokerCount, positions, orders, riskSettings] = await Promise.all([
       prisma.strategy.count(),
       prisma.strategy.count({ where: { status: "RUNNING" } }),
-      prisma.broker.count({ where: { connected: true } }),
-      prisma.user.count({ where: { status: "ACTIVE" } }),
+      prisma.brokerConnection.count({ where: { status: "CONNECTED" } }),
+      prisma.position.findMany({ select: { quantity: true, ltp: true, pnl: true, status: true } }),
+      prisma.order.findMany({ select: { pnl: true } }),
+      prisma.riskSetting.findMany({ select: { usagePercent: true } }),
     ]);
+
+    totalStrategies = strategyCount;
+    liveStrategies = runningStrategyCount;
+    connectedBrokers = brokerCount;
+    activeTrades = positions.filter((position) => ["OPEN", "ACTIVE"].includes(position.status.toUpperCase())).length;
+    totalPortfolioValue = positions.reduce((sum, position) => sum + position.quantity * position.ltp, 0);
+    overallPnl = positions.reduce((sum, position) => sum + position.pnl, 0) + orders.reduce((sum, order) => sum + order.pnl, 0);
+    riskUsage = riskSettings.length
+      ? riskSettings.reduce((sum, setting) => sum + setting.usagePercent, 0) / riskSettings.length
+      : 0;
   } catch {
     // Public content remains available while the optional metrics database is offline.
   }
@@ -31,20 +46,32 @@ export default async function HomePage() {
       <section className="rounded-[32px] border border-white/10 bg-slate-900/70 p-5 sm:p-8">
         <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5">
-            <div className="text-xs sm:text-sm text-slate-400">Total Strategies</div>
-            <div className="mt-2 sm:mt-3 text-2xl sm:text-3xl font-semibold text-white">{totalStrategies}</div>
+            <div className="text-xs sm:text-sm text-slate-400">Portfolio Value</div>
+            <div className="mt-2 sm:mt-3 text-2xl sm:text-3xl font-semibold text-white">₹{totalPortfolioValue.toLocaleString("en-IN")}</div>
+          </div>
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5">
+            <div className="text-xs sm:text-sm text-slate-400">Overall P&amp;L</div>
+            <div className={`mt-2 sm:mt-3 text-2xl sm:text-3xl font-semibold ${overallPnl >= 0 ? "text-emerald-300" : "text-rose-300"}`}>₹{overallPnl.toLocaleString("en-IN")}</div>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5">
             <div className="text-xs sm:text-sm text-slate-400">Live Algorithms</div>
             <div className="mt-2 sm:mt-3 text-2xl sm:text-3xl font-semibold text-white">{liveStrategies}</div>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5">
+            <div className="text-xs sm:text-sm text-slate-400">Risk Usage</div>
+            <div className="mt-2 sm:mt-3 text-2xl sm:text-3xl font-semibold text-white">{riskUsage.toFixed(1)}%</div>
+          </div>
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5">
+            <div className="text-xs sm:text-sm text-slate-400">Total Strategies</div>
+            <div className="mt-2 sm:mt-3 text-2xl sm:text-3xl font-semibold text-white">{totalStrategies}</div>
+          </div>
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5">
             <div className="text-xs sm:text-sm text-slate-400">Connected Brokers</div>
             <div className="mt-2 sm:mt-3 text-2xl sm:text-3xl font-semibold text-white">{connectedBrokers}</div>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5">
-            <div className="text-xs sm:text-sm text-slate-400">Active Traders</div>
-            <div className="mt-2 sm:mt-3 text-2xl sm:text-3xl font-semibold text-white">{activeUsers}</div>
+            <div className="text-xs sm:text-sm text-slate-400">Active Trades</div>
+            <div className="mt-2 sm:mt-3 text-2xl sm:text-3xl font-semibold text-white">{activeTrades}</div>
           </div>
         </div>
       </section>

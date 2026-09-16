@@ -26,6 +26,18 @@ export function getDashboardPathForRole(role?: string | null) {
   }
 }
 
+export function getPublicOrigin(request: Request) {
+  const configuredOrigin = process.env.NEXT_PUBLIC_APP_URL?.trim().replace(/\/$/, "");
+  if (configuredOrigin && !configuredOrigin.includes("localhost")) {
+    return configuredOrigin;
+  }
+
+  const forwardedHost = request.headers.get("x-forwarded-host") || request.headers.get("host");
+  const forwardedProtocol = request.headers.get("x-forwarded-proto") || new URL(request.url).protocol.replace(":", "");
+
+  return forwardedHost ? `${forwardedProtocol}://${forwardedHost}` : new URL(request.url).origin;
+}
+
 export function isAdmin(session: any) {
   return session?.role === "ADMIN";
 }
