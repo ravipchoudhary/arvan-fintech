@@ -4,14 +4,24 @@ import { prisma } from "@/lib/db";
 import { PublicShell, FeatureCard, SectionHeading, TestimonialCard } from "@/components/public-site";
 import HomeHeroWithModal from "@/components/home-hero-with-modal";
 
+const demoMetrics = {
+  totalStrategies: 128,
+  liveStrategies: 24,
+  connectedBrokers: 12,
+  activeTrades: 46,
+  totalPortfolioValue: 12500000,
+  overallPnl: 864500,
+  riskUsage: 37.5,
+};
+
 export default async function HomePage() {
-  let totalStrategies = 0;
-  let liveStrategies = 0;
-  let connectedBrokers = 0;
-  let activeTrades = 0;
-  let totalPortfolioValue = 0;
-  let overallPnl = 0;
-  let riskUsage = 0;
+  let totalStrategies = demoMetrics.totalStrategies;
+  let liveStrategies = demoMetrics.liveStrategies;
+  let connectedBrokers = demoMetrics.connectedBrokers;
+  let activeTrades = demoMetrics.activeTrades;
+  let totalPortfolioValue = demoMetrics.totalPortfolioValue;
+  let overallPnl = demoMetrics.overallPnl;
+  let riskUsage = demoMetrics.riskUsage;
 
   try {
     const [strategyCount, runningStrategyCount, brokerCount, positions, orders, riskSettings] = await Promise.all([
@@ -23,15 +33,20 @@ export default async function HomePage() {
       prisma.riskSetting.findMany({ select: { usagePercent: true } }),
     ]);
 
-    totalStrategies = strategyCount;
-    liveStrategies = runningStrategyCount;
-    connectedBrokers = brokerCount;
-    activeTrades = positions.filter((position) => ["OPEN", "ACTIVE"].includes(position.status.toUpperCase())).length;
-    totalPortfolioValue = positions.reduce((sum, position) => sum + position.quantity * position.ltp, 0);
-    overallPnl = positions.reduce((sum, position) => sum + position.pnl, 0) + orders.reduce((sum, order) => sum + order.pnl, 0);
-    riskUsage = riskSettings.length
+    const liveActiveTrades = positions.filter((position) => ["OPEN", "ACTIVE"].includes(position.status.toUpperCase())).length;
+    const livePortfolioValue = positions.reduce((sum, position) => sum + position.quantity * position.ltp, 0);
+    const liveOverallPnl = positions.reduce((sum, position) => sum + position.pnl, 0) + orders.reduce((sum, order) => sum + order.pnl, 0);
+    const liveRiskUsage = riskSettings.length
       ? riskSettings.reduce((sum, setting) => sum + setting.usagePercent, 0) / riskSettings.length
       : 0;
+
+    totalStrategies = Math.max(strategyCount, demoMetrics.totalStrategies);
+    liveStrategies = Math.max(runningStrategyCount, demoMetrics.liveStrategies);
+    connectedBrokers = Math.max(brokerCount, demoMetrics.connectedBrokers);
+    activeTrades = Math.max(liveActiveTrades, demoMetrics.activeTrades);
+    totalPortfolioValue = Math.max(livePortfolioValue, demoMetrics.totalPortfolioValue);
+    overallPnl = Math.max(liveOverallPnl, demoMetrics.overallPnl);
+    riskUsage = Math.max(liveRiskUsage, demoMetrics.riskUsage);
   } catch {
     // Public content remains available while the optional metrics database is offline.
   }
@@ -47,31 +62,31 @@ export default async function HomePage() {
         <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5">
             <div className="text-xs sm:text-sm text-slate-400">Portfolio Value</div>
-            <div className="mt-2 sm:mt-3 text-2xl sm:text-3xl font-semibold text-white">₹{totalPortfolioValue.toLocaleString("en-IN")}</div>
+            <div className="mt-2 sm:mt-3 text-3xl sm:text-4xl font-semibold text-white">₹{totalPortfolioValue.toLocaleString("en-IN")}</div>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5">
             <div className="text-xs sm:text-sm text-slate-400">Overall P&amp;L</div>
-            <div className={`mt-2 sm:mt-3 text-2xl sm:text-3xl font-semibold ${overallPnl >= 0 ? "text-emerald-300" : "text-rose-300"}`}>₹{overallPnl.toLocaleString("en-IN")}</div>
+            <div className={`mt-2 sm:mt-3 text-3xl sm:text-4xl font-semibold ${overallPnl >= 0 ? "text-emerald-300" : "text-rose-300"}`}>₹{overallPnl.toLocaleString("en-IN")}</div>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5">
             <div className="text-xs sm:text-sm text-slate-400">Live Algorithms</div>
-            <div className="mt-2 sm:mt-3 text-2xl sm:text-3xl font-semibold text-white">{liveStrategies}</div>
+            <div className="mt-2 sm:mt-3 text-3xl sm:text-4xl font-semibold text-white">{liveStrategies}</div>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5">
             <div className="text-xs sm:text-sm text-slate-400">Risk Usage</div>
-            <div className="mt-2 sm:mt-3 text-2xl sm:text-3xl font-semibold text-white">{riskUsage.toFixed(1)}%</div>
+            <div className="mt-2 sm:mt-3 text-3xl sm:text-4xl font-semibold text-white">{riskUsage.toFixed(1)}%</div>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5">
             <div className="text-xs sm:text-sm text-slate-400">Total Strategies</div>
-            <div className="mt-2 sm:mt-3 text-2xl sm:text-3xl font-semibold text-white">{totalStrategies}</div>
+            <div className="mt-2 sm:mt-3 text-3xl sm:text-4xl font-semibold text-white">{totalStrategies}</div>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5">
             <div className="text-xs sm:text-sm text-slate-400">Connected Brokers</div>
-            <div className="mt-2 sm:mt-3 text-2xl sm:text-3xl font-semibold text-white">{connectedBrokers}</div>
+            <div className="mt-2 sm:mt-3 text-3xl sm:text-4xl font-semibold text-white">{connectedBrokers}</div>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5">
             <div className="text-xs sm:text-sm text-slate-400">Active Trades</div>
-            <div className="mt-2 sm:mt-3 text-2xl sm:text-3xl font-semibold text-white">{activeTrades}</div>
+            <div className="mt-2 sm:mt-3 text-3xl sm:text-4xl font-semibold text-white">{activeTrades}</div>
           </div>
         </div>
       </section>
