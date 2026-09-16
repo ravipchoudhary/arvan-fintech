@@ -5,12 +5,21 @@ import { PublicShell, FeatureCard, SectionHeading, TestimonialCard } from "@/com
 import HomeHeroWithModal from "@/components/home-hero-with-modal";
 
 export default async function HomePage() {
-  const [totalStrategies, liveStrategies, connectedBrokers, activeUsers] = await Promise.all([
-    prisma.strategy.count(),
-    prisma.strategy.count({ where: { status: "RUNNING" } }),
-    prisma.broker.count({ where: { connected: true } }),
-    prisma.user.count({ where: { status: "ACTIVE" } }),
-  ]);
+  let totalStrategies = 0;
+  let liveStrategies = 0;
+  let connectedBrokers = 0;
+  let activeUsers = 0;
+
+  try {
+    [totalStrategies, liveStrategies, connectedBrokers, activeUsers] = await Promise.all([
+      prisma.strategy.count(),
+      prisma.strategy.count({ where: { status: "RUNNING" } }),
+      prisma.broker.count({ where: { connected: true } }),
+      prisma.user.count({ where: { status: "ACTIVE" } }),
+    ]);
+  } catch {
+    // Public content remains available while the optional metrics database is offline.
+  }
 
   return (
     <PublicShell
