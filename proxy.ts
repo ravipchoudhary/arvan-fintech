@@ -52,7 +52,7 @@ function hasAccess(pathname: string, role?: string) {
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const isPublic = publicRoutes.includes(pathname) || pathname.startsWith("/_next") || pathname.startsWith("/favicon") || pathname.includes(".");
+  const isPublic = publicRoutes.includes(pathname) || pathname === "/registration" || pathname.startsWith("/registration/") || pathname.startsWith("/_next") || pathname.startsWith("/favicon") || pathname.includes(".");
 
   if (isPublic) {
     return NextResponse.next();

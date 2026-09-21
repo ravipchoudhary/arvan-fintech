@@ -66,6 +66,13 @@ enum LeadSource {
   OTHER
 }
 
+enum RegistrationPaymentStatus {
+  PENDING_PAYMENT
+  PENDING_VERIFICATION
+  VERIFIED
+  REJECTED
+}
+
 model User {
   id           String     @id @default(cuid())
   name         String
@@ -289,6 +296,35 @@ model PasswordResetToken {
 
   @@index([userId])
   @@index([token])
+}
+
+model StudentRegistration {
+  id             String                    @id @default(cuid())
+  registrationId String?                  @unique
+  paymentToken   String                    @unique
+  fullName       String
+  address        String
+  mobile         String
+  email          String
+  college        String
+  course         String
+  transactionId  String?
+  paymentStatus  RegistrationPaymentStatus @default(PENDING_PAYMENT)
+  createdAt      DateTime                  @default(now())
+  updatedAt      DateTime                  @updatedAt
+
+  @@index([paymentStatus])
+  @@index([createdAt])
+}
+
+model PaymentQrConfiguration {
+  id         String   @id @default(cuid())
+  qrImageUrl String
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([isActive])
 }
 
 

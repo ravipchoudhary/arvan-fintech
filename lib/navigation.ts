@@ -10,6 +10,7 @@ export const publicNavItems = [
   { href: "/faq", label: "FAQ" },
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
+  { href: "/registration", label: "Student Registration" },
 ];
 
 export const adminNavSections = [
@@ -29,6 +30,7 @@ export const adminNavSections = [
     title: "Administration",
     items: [
       { href: "/admin/leads", label: "Leads", icon: FileText },
+      { href: "/admin/registrations", label: "Student Registrations", icon: Users },
       { href: "/admin/employees", label: "Employees", icon: Users },
       { href: "/admin/clients", label: "Clients / Users", icon: Users },
       { href: "/admin/sales", label: "Sales Management", icon: BarChart3 },
