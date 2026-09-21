@@ -33,7 +33,7 @@ export function PublicShell({
                 <div className="hidden lg:block rounded-[32px] border border-white/10 bg-slate-900/70 p-5 shadow-2xl shadow-black/30">
                   <div className="rounded-[24px] border border-white/10 bg-gradient-to-br from-slate-900 via-slate-900 to-blue-950 p-6">
                     <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                      <HeroMetricCard label="Portfolio Value" value="₹1,25,00,000" delta="Demo view" />
+                      <HeroMetricCard label="Portfolio Value" value="₹1,25,00,000" delta="Current overview" />
                       <HeroMetricCard label="Overall P&amp;L" value="+₹8,64,500" delta="Positive" />
                       <HeroMetricCard label="Live Algorithms" value="24" delta="Running" />
                       <HeroMetricCard label="Risk Usage" value="37.5%" delta="Balanced" />
