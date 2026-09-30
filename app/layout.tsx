@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import PaymentRestrictionOverlay from "@/components/payment-restriction-overlay";
-import { PAYMENT_RESTRICTED } from "@/components/payment-restriction-config";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -21,16 +19,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning className={PAYMENT_RESTRICTED ? "overflow-hidden" : undefined}>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/arvan-logo.png" />
       </head>
-      <body className={`bg-[#07111f] text-slate-100${PAYMENT_RESTRICTED ? " overflow-hidden" : ""}`}>
-        <div inert={PAYMENT_RESTRICTED ? true : undefined} aria-hidden={PAYMENT_RESTRICTED || undefined}>
-          {children}
-        </div>
-        <PaymentRestrictionOverlay />
-      </body>
+      <body className="bg-[#07111f] text-slate-100">{children}</body>
     </html>
   );
 }

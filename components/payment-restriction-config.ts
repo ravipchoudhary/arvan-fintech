@@ -1,1 +1,0 @@
-export const PAYMENT_RESTRICTED = true;
