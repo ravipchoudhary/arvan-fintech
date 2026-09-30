@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ChevronRight } from "lucide-react";
 
 interface Lead {
@@ -24,7 +24,7 @@ export function EmployeeLeadsClient() {
   const [status, setStatus] = useState("");
   const [newNote, setNewNote] = useState("");
 
-  const fetchLeads = async () => {
+  const fetchLeads = useCallback(async () => {
     setLoading(true);
     try {
       const params = new URLSearchParams({
@@ -44,11 +44,15 @@ export function EmployeeLeadsClient() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [status]);
 
   useEffect(() => {
-    fetchLeads();
-  }, [status]);
+    const timer = setTimeout(() => {
+      void fetchLeads();
+    }, 0);
+
+    return () => clearTimeout(timer);
+  }, [fetchLeads]);
 
   const handleStatusChange = async (leadId: string, newStatus: string) => {
     try {
@@ -62,7 +66,7 @@ export function EmployeeLeadsClient() {
         setSelectedLead((current) =>
           current && current.id === leadId ? { ...current, status: newStatus } : current
         );
-        fetchLeads();
+        await fetchLeads();
       }
     } catch (error) {
       console.error("Failed to update status:", error);
@@ -92,7 +96,7 @@ export function EmployeeLeadsClient() {
             : current
         );
         setNewNote("");
-        fetchLeads();
+        await fetchLeads();
       }
     } catch (error) {
       console.error("Failed to add note:", error);

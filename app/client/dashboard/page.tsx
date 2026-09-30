@@ -18,6 +18,8 @@ export default async function ClientDashboardPage() {
     prisma.riskSetting.findFirst({ where: { clientId: session.id } }),
   ]);
 
+  void notifications;
+
   const connected = brokerConnection?.status === "CONNECTED";
   const totalPortfolioValue = connected ? positions.reduce((sum, position) => sum + position.quantity * position.ltp, 0) : 0;
   const deployedCapital = positions.reduce((sum, position) => sum + position.quantity * position.avgPrice, 0);
@@ -38,7 +40,7 @@ export default async function ClientDashboardPage() {
   const runningStrategies = strategies.filter((strategy) => strategy.status === "RUNNING").length;
 
   return (
-    <AppShell title={`Good Morning, ${session.name}`} subtitle="Here's your trading account overview." variant="client">
+    <AppShell title={`Good Morning, ${session.name}`} subtitle={"Here&apos;s your trading account overview."} variant="client">
       <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
         <div className="rounded-3xl border border-slate-200 bg-white p-4 sm:p-5">
           <div className="text-xs sm:text-sm text-slate-500">Total Portfolio Value</div>
@@ -56,7 +58,7 @@ export default async function ClientDashboardPage() {
 
       <div className="mt-8 sm:mt-10 grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 xl:grid-cols-5">
         <div className="rounded-3xl border border-slate-200 bg-white p-4 sm:p-5">
-          <div className="text-xs sm:text-sm text-slate-500">Today's P&L</div>
+          <div className="text-xs sm:text-sm text-slate-500">Today&apos;s P&L</div>
           <div className={`mt-2 sm:mt-3 text-2xl sm:text-3xl font-bold ${todaysPnl >= 0 ? "text-emerald-600" : "text-rose-600"}`}>
             {connected ? `₹${todaysPnl.toLocaleString()}` : "Broker Not Connected"}
           </div>

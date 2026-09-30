@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Search, Filter, ChevronLeft, ChevronRight } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { Search, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface Lead {
   id: string;
@@ -29,7 +29,7 @@ export function AdminLeadsClient() {
   const [sortOrder, setSortOrder] = useState("desc");
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
 
-  const fetchLeads = async () => {
+  const fetchLeads = useCallback(async () => {
     setLoading(true);
     try {
       const params = new URLSearchParams({
@@ -53,11 +53,15 @@ export function AdminLeadsClient() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [limit, page, search, sortBy, sortOrder, status]);
 
   useEffect(() => {
-    fetchLeads();
-  }, [page, search, status, sortBy, sortOrder]);
+    const timer = setTimeout(() => {
+      void fetchLeads();
+    }, 0);
+
+    return () => clearTimeout(timer);
+  }, [fetchLeads]);
 
   const handleAssign = async (leadId: string, assignedToId: string) => {
     try {
@@ -354,6 +358,12 @@ interface LeadDetailsModalProps {
   onRefresh: () => void;
 }
 
+interface LeadNote {
+  id: string;
+  note: string;
+  createdAt: string;
+}
+
 function LeadDetailsModal({
   lead,
   onClose,
@@ -361,15 +371,11 @@ function LeadDetailsModal({
   onStatusChange,
   onRefresh,
 }: LeadDetailsModalProps) {
-  const [notes, setNotes] = useState<any[]>([]);
+  const [notes, setNotes] = useState<LeadNote[]>([]);
   const [newNote, setNewNote] = useState("");
   const [loadingNotes, setLoadingNotes] = useState(true);
 
-  useEffect(() => {
-    fetchNotes();
-  }, []);
-
-  const fetchNotes = async () => {
+  const fetchNotes = useCallback(async () => {
     try {
       const response = await fetch(`/api/leads/${lead.id}`);
       const data = await response.json();
@@ -381,7 +387,15 @@ function LeadDetailsModal({
     } finally {
       setLoadingNotes(false);
     }
-  };
+  }, [lead.id]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      void fetchNotes();
+    }, 0);
+
+    return () => clearTimeout(timer);
+  }, [fetchNotes]);
 
   const handleAddNote = async () => {
     if (!newNote.trim()) return;

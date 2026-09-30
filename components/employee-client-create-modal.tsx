@@ -25,7 +25,6 @@ export function EmployeeClientCreateModal({
 
   useEffect(() => {
     if (state.success) {
-      setOpen(false);
       router.refresh();
     }
   }, [router, state.success]);
@@ -36,7 +35,7 @@ export function EmployeeClientCreateModal({
         Add Client
       </button>
 
-      {open ? (
+      {open && !state.success ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-900/60 p-4">
           <div className="w-full max-w-xl rounded-3xl border border-slate-200 bg-white p-5 shadow-2xl shadow-slate-950/10 sm:p-6 max-h-[calc(100vh-4rem)] overflow-y-auto">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">

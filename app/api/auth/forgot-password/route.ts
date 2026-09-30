@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
 import { prisma } from "@/lib/db";
 import { getPublicOrigin } from "@/lib/auth";
+import { sendPasswordResetEmail } from "@/lib/mail";
 
 /**
  * POST /api/auth/forgot-password
@@ -78,17 +79,8 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // TODO: Send email/SMS with reset link
-    // For now, log the token for development
     const resetLink = `${getPublicOrigin(request)}/reset-password?token=${resetToken}`;
-    console.log(`Password reset link for ${user.email}: ${resetLink}`);
-
-    // If email service is not configured, add info to console
-    if (!process.env.SMTP_HOST) {
-      console.info(
-        "EMAIL SERVICE NOT CONFIGURED: Password reset link would be sent here in production"
-      );
-    }
+    await sendPasswordResetEmail({ recipient: user.email, resetLink });
 
     return NextResponse.json(
       {

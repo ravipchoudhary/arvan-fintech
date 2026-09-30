@@ -9,8 +9,10 @@ export const publicNavItems = [
   { href: "/pricing", label: "Pricing" },
   { href: "/faq", label: "FAQ" },
   { href: "/blog", label: "Blog" },
+  { href: "/student/dashboard", label: "Student Lab" },
   { href: "/contact", label: "Contact" },
   { href: "/registration", label: "Student Registration" },
+  { href: "/login", label: "Open Platform" },
 ];
 
 export const adminNavSections = [

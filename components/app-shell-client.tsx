@@ -47,10 +47,6 @@ export default function AppShellClient({ title, subtitle, children, variant = "a
     return undefined;
   }, [mobileOpen]);
 
-  useEffect(() => {
-    setMobileOpen(false);
-  }, [pathname]);
-
   const closeMenu = () => setMobileOpen(false);
 
   return (

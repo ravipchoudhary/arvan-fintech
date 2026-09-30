@@ -4,25 +4,29 @@ import { readFollowups } from "@/lib/followups";
 
 type FollowUpEntry = {
   id: string;
-  employeeId: string;
+  employeeId?: string | null;
   clientName?: string | null;
   type?: string | null;
   status?: string | null;
-  scheduledAt: string;
+  scheduledAt?: string | null;
 };
 
 export default async function FollowUpsPage() {
   const session = await getSessionUser();
   if (!session) return null;
 
-  const all = (await readFollowups())
-    .filter((f: FollowUpEntry) => f.employeeId === session.id)
-    .sort((a: FollowUpEntry, b: FollowUpEntry) => new Date(a.scheduledAt).getTime() - new Date(b.scheduledAt).getTime());
+  const now = new Date();
+  const baseFollowups = (await readFollowups()).filter((f: FollowUpEntry) => f.employeeId === session.id);
+  const all = [...baseFollowups].sort((a: FollowUpEntry, b: FollowUpEntry) => {
+    const first = a.scheduledAt ? new Date(a.scheduledAt).getTime() : Number.MAX_SAFE_INTEGER;
+    const second = b.scheduledAt ? new Date(b.scheduledAt).getTime() : Number.MAX_SAFE_INTEGER;
+    return first - second;
+  });
 
-  const today = all.filter((f: FollowUpEntry) => new Date(f.scheduledAt).toDateString() === new Date().toDateString());
-  const upcoming = all.filter((f: FollowUpEntry) => new Date(f.scheduledAt) > new Date());
+  const today = all.filter((f: FollowUpEntry) => f.scheduledAt && new Date(f.scheduledAt).toDateString() === now.toDateString());
+  const upcoming = all.filter((f: FollowUpEntry) => !!f.scheduledAt && new Date(f.scheduledAt) > now);
   const completed = all.filter((f: FollowUpEntry) => f.status === "COMPLETED");
-  const overdue = all.filter((f: FollowUpEntry) => new Date(f.scheduledAt) < new Date() && f.status !== "COMPLETED");
+  const overdue = all.filter((f: FollowUpEntry) => !!f.scheduledAt && new Date(f.scheduledAt) < now && f.status !== "COMPLETED");
 
   return (
     <AppShell title="Follow Ups" subtitle="Manage your follow ups" variant="employee">
@@ -33,36 +37,42 @@ export default async function FollowUpsPage() {
 
       <div className="grid gap-4">
         {today.length === 0 ? <div className="text-sm text-slate-500">No follow-ups today.</div> : null}
-        {today.map((f: FollowUpEntry) => (
-          <div key={f.id} className="rounded-xl border p-3">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="font-semibold">{f.clientName || "Client"}</div>
-                <div className="text-sm text-slate-500">{new Date(f.scheduledAt).toLocaleTimeString()}</div>
-              </div>
-              <div className="flex items-center gap-2">
-                <a href={`/employee/follow-ups/${f.id}/edit`} className="text-sm text-blue-600">Edit</a>
-                <button className="text-sm text-green-600">Complete</button>
+        {today.map((f: FollowUpEntry) => {
+          const scheduledDate = f.scheduledAt ? new Date(f.scheduledAt) : null;
+          return (
+            <div key={f.id} className="rounded-xl border p-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="font-semibold">{f.clientName || "Client"}</div>
+                  <div className="text-sm text-slate-500">{scheduledDate ? scheduledDate.toLocaleTimeString() : "No schedule"}</div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <a href={`/employee/follow-ups/${f.id}/edit`} className="text-sm text-blue-600">Edit</a>
+                  <button className="text-sm text-green-600">Complete</button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <div className="mt-6">
         <h3 className="text-md font-semibold">Upcoming</h3>
         <div className="mt-3 grid gap-3">
-          {upcoming.map((f: FollowUpEntry) => (
-            <div key={f.id} className="rounded-xl border p-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="font-semibold">{f.clientName || "Client"}</div>
-                  <div className="text-sm text-slate-500">{new Date(f.scheduledAt).toLocaleString()}</div>
+          {upcoming.map((f: FollowUpEntry) => {
+            const scheduledDate = f.scheduledAt ? new Date(f.scheduledAt) : null;
+            return (
+              <div key={f.id} className="rounded-xl border p-3">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="font-semibold">{f.clientName || "Client"}</div>
+                    <div className="text-sm text-slate-500">{scheduledDate ? scheduledDate.toLocaleString() : "No schedule"}</div>
+                  </div>
+                  <div className="text-sm text-slate-400">{f.type}</div>
                 </div>
-                <div className="text-sm text-slate-400">{f.type}</div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </AppShell>

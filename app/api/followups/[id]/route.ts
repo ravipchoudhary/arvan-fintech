@@ -2,14 +2,22 @@ import { NextResponse } from "next/server";
 import { updateFollowup, deleteFollowup, readFollowups } from "@/lib/followups";
 import { parseSessionFromRequest, isAdmin, isEmployee } from "@/lib/auth";
 
-export async function PUT(request: Request, context: any) {
+type FollowupRouteContext = {
+  params?: Promise<{ id?: string }> | { id?: string };
+};
+
+export async function PUT(request: Request, context: FollowupRouteContext) {
   const session = parseSessionFromRequest(request);
   if (!session) return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
 
-  const params = typeof context?.params?.then === "function" ? await context.params : context.params;
-  const id = params?.id;
+  const resolvedParams = context.params ? await context.params : undefined;
+  const id = resolvedParams?.id;
+  if (!id) {
+    return NextResponse.json({ success: false, message: "Missing follow-up id" }, { status: 400 });
+  }
+
   const list = await readFollowups();
-  const existing = list.find((f: any) => f.id === id);
+  const existing = list.find((f: { id?: string; employeeId?: string | null }) => f.id === id);
   if (!existing) return NextResponse.json({ success: false, message: "Not found" }, { status: 404 });
 
   // Allow admins or the owning employee to update
@@ -23,14 +31,18 @@ export async function PUT(request: Request, context: any) {
   return NextResponse.json({ success: true, data: updated });
 }
 
-export async function DELETE(request: Request, context: any) {
+export async function DELETE(request: Request, context: FollowupRouteContext) {
   const session = parseSessionFromRequest(request);
   if (!session) return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
 
-  const params = typeof context?.params?.then === "function" ? await context.params : context.params;
-  const id = params?.id;
+  const resolvedParams = context.params ? await context.params : undefined;
+  const id = resolvedParams?.id;
+  if (!id) {
+    return NextResponse.json({ success: false, message: "Missing follow-up id" }, { status: 400 });
+  }
+
   const list = await readFollowups();
-  const existing = list.find((f: any) => f.id === id);
+  const existing = list.find((f: { id?: string; employeeId?: string | null }) => f.id === id);
   if (!existing) return NextResponse.json({ success: false, message: "Not found" }, { status: 404 });
 
   if (!isAdmin(session) && !(isEmployee(session) && existing.employeeId === session.id)) {

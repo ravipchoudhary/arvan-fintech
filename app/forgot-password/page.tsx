@@ -19,7 +19,7 @@ export default function ForgotPasswordPage() {
               />
             </div>
             <h1 className="mt-10 text-4xl font-black leading-tight">Reset your password.</h1>
-            <p className="mt-4 max-w-md text-slate-300">Don't worry! We'll help you regain access to your account quickly and securely.</p>
+            <p className="mt-4 max-w-md text-slate-300">Don&apos;t worry! We&apos;ll help you regain access to your account quickly and securely.</p>
 
             <div className="mt-10 space-y-4 rounded-3xl border border-slate-700 bg-slate-900/60 p-5">
               <div className="text-sm text-slate-300">Security</div>

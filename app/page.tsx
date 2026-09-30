@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, BarChart3, BellRing, Bot, Cpu } from "lucide-react";
+import { ArrowRight, BarChart3, BellRing, BookOpen, Bot, Cpu, Route, Workflow } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { PublicShell, FeatureCard, SectionHeading, TestimonialCard } from "@/components/public-site";
 import HomeHeroWithModal from "@/components/home-hero-with-modal";
@@ -58,6 +58,36 @@ export default async function HomePage() {
       eyebrow="Arvan Fintech"
       hero={<HomeHeroWithModal />}
     >
+      <section className="mb-12 sm:mb-16 rounded-4xl border border-cyan-300/20 bg-linear-to-br from-cyan-950/70 via-slate-900/90 to-slate-900 p-6 sm:p-8">
+        <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-300">A clear place to begin</div>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-3xl">New to trading systems? Start here.</h2>
+            <p className="mt-4 text-sm leading-7 text-slate-300 sm:text-base">Learn the ideas, follow the workflow, then explore the tools. No jargon-first approach.</p>
+            <Link href="/blog" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-cyan-300 transition hover:text-cyan-200">
+              Start with the basics <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+          <div className="grid gap-5 sm:grid-cols-3">
+            {[
+              { number: "01", title: "Learn the basics", description: "Get familiar with trading and risk concepts.", href: "/blog", icon: BookOpen, link: "Read insights" },
+              { number: "02", title: "See the process", description: "Follow the journey from account setup to monitoring.", href: "/how-it-works", icon: Route, link: "How it works" },
+              { number: "03", title: "Explore strategies", description: "See how rules and automation fit together.", href: "/services", icon: Workflow, link: "Explore services" },
+            ].map(({ number, title, description, href, icon: Icon, link }) => (
+              <Link key={number} href={href} className="group border-t border-white/15 pt-4 transition hover:border-cyan-300/60">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-semibold text-cyan-300">{number}</span>
+                  <Icon className="h-5 w-5 text-slate-400 transition group-hover:text-cyan-300" />
+                </div>
+                <h3 className="mt-4 text-base font-semibold text-white">{title}</h3>
+                <p className="mt-2 min-h-12 text-sm leading-6 text-slate-400">{description}</p>
+                <span className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-slate-200 group-hover:text-cyan-200">{link}<ArrowRight className="h-3.5 w-3.5" /></span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="rounded-[32px] border border-white/10 bg-slate-900/70 p-5 sm:p-8">
         <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5">

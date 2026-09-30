@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Project-maintenance scripts and temporary verification files are not part of the app runtime.
+    "scripts/**",
+    "tmp-*.js",
+    ".tmp-target-counts.js",
   ]),
 ]);
 

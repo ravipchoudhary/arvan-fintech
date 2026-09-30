@@ -3,9 +3,16 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
+type FollowUpEditEntry = {
+  id: string;
+  title?: string | null;
+  notes?: string | null;
+  dueAt?: string | null;
+};
+
 export default function EditFollowUpPage({ params }: { params: { id: string } }) {
   const { id } = params;
-  const [entry, setEntry] = useState<any>(null);
+  const [entry, setEntry] = useState<FollowUpEditEntry | null>(null);
   const [title, setTitle] = useState("");
   const [notes, setNotes] = useState("");
   const [dueAt, setDueAt] = useState("");
@@ -13,7 +20,7 @@ export default function EditFollowUpPage({ params }: { params: { id: string } })
 
   useEffect(() => {
     fetch("/api/followups").then((r) => r.json()).then((data) => {
-      const found = (data.data || []).find((f: any) => f.id === id);
+      const found = (data.data || []).find((f: FollowUpEditEntry) => f.id === id);
       if (found) {
         setEntry(found);
         setTitle(found.title || "");

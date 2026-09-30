@@ -25,7 +25,11 @@ export default async function EmployeeDashboardPage() {
     prisma.target.findFirst({ where: { ...employeeRecordWhere(session.id), month, year } }),
   ]);
 
-  const followupsTodayCount = followups.filter((f: any) => f.employeeId === session.id && new Date(f.scheduledAt) >= todayStart && new Date(f.scheduledAt) < todayEnd).length;
+  const followupsTodayCount = followups.filter((f: { employeeId?: string | null; scheduledAt?: string | null }) => {
+    if (!f.employeeId || !f.scheduledAt) return false;
+    const scheduledAt = new Date(f.scheduledAt);
+    return f.employeeId === session.id && scheduledAt >= todayStart && scheduledAt < todayEnd;
+  }).length;
 
   const achieved = salesAgg._sum?.amount ?? 0;
   const targetAmount = target?.amount ?? 0;
@@ -35,7 +39,7 @@ export default async function EmployeeDashboardPage() {
   const conversionRate = activeClients > 0 ? Math.round(((activeClients / Math.max(1, newClients + 0)) * 100) * 10) / 10 : 0;
 
   return (
-    <AppShell title={`Good Morning, ${session.name}`} subtitle={`Here's your performance overview for ${now.toLocaleString("default", { month: "long" })}.`} variant="employee">
+    <AppShell title={`Good Morning, ${session.name}`} subtitle={`Here&apos;s your performance overview for ${now.toLocaleString("default", { month: "long" })}.`} variant="employee">
       <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
         <div className="stat-card">
           <div className="text-xs sm:text-sm text-slate-500">Active Clients</div>

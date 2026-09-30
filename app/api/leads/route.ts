@@ -20,19 +20,34 @@ async function generateLeadId(): Promise<string> {
   return `LEAD-${String(nextNumber).padStart(6, "0")}`;
 }
 
+type LeadInput = {
+  name?: string;
+  mobile?: string;
+  email?: string;
+  selectedPlan?: string;
+  companyName?: string;
+  city?: string;
+  message?: string;
+  source?: string;
+  planPrice?: number;
+};
+
 // Validation helper
-function validateLeadData(data: any) {
+function validateLeadData(data: LeadInput) {
   const errors: Record<string, string> = {};
 
-  if (!data.name || data.name.trim().length < 2) {
+  const safeName = typeof data.name === "string" ? data.name.trim() : "";
+  if (!safeName || safeName.length < 2) {
     errors.name = "Name is required and must be at least 2 characters";
   }
 
-  if (!data.mobile || !/^[0-9]{10}$/.test(data.mobile.replace(/\D/g, ""))) {
+  const mobile = typeof data.mobile === "string" ? data.mobile : "";
+  if (!mobile || !/^[0-9]{10}$/.test(mobile.replace(/\D/g, ""))) {
     errors.mobile = "Valid 10-digit mobile number is required";
   }
 
-  if (!data.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+  const email = typeof data.email === "string" ? data.email : "";
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     errors.email = "Valid email address is required";
   }
 
@@ -115,7 +130,7 @@ export async function GET(request: NextRequest) {
     const skip = (page - 1) * limit;
 
     // Build filter
-    const where: any = {};
+    const where: Record<string, unknown> = {};
 
     // Role-based filtering
     if (sessionUser.role === "EMPLOYEE") {

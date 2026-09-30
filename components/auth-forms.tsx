@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useRef, useState } from "react";
 import { Eye, EyeOff, Lock, Mail, Phone, UserRound } from "lucide-react";
 
 export function LoginForm() {
@@ -149,17 +150,19 @@ function Field({ icon, label, name, type = "text", placeholder }: { icon: React.
 }
 
 export function ForgotPasswordForm() {
+  const formRef = useRef<HTMLFormElement>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [messageType, setMessageType] = useState<"error" | "success">("error");
   const [submitting, setSubmitting] = useState(false);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const form = event.currentTarget;
     setMessage(null);
     setSubmitting(true);
 
     try {
-      const formData = new FormData(event.currentTarget);
+      const formData = new FormData(form);
       const identifier = String(formData.get("emailOrPhone") || "").trim();
 
       if (!identifier) {
@@ -186,7 +189,7 @@ export function ForgotPasswordForm() {
 
       setMessageType("success");
       setMessage(result.message || "If an account exists with this email/phone, you will receive a password reset link shortly.");
-      event.currentTarget.reset();
+      formRef.current?.reset();
     } catch (error) {
       setMessageType("error");
       setMessage("An error occurred. Please try again.");
@@ -197,7 +200,7 @@ export function ForgotPasswordForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
       <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3">
         <label className="mb-1 block text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">Email or Phone</label>
         <div className="flex items-center gap-2">
@@ -238,6 +241,7 @@ export function ForgotPasswordForm() {
 }
 
 export function ResetPasswordForm({ resetToken }: { resetToken: string }) {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
@@ -297,9 +301,9 @@ export function ResetPasswordForm({ resetToken }: { resetToken: string }) {
 
       setMessageType("success");
       setMessage("Password reset successful! Redirecting to login...");
-      
+
       setTimeout(() => {
-        window.location.href = "/login";
+        router.push("/login");
       }, 2000);
     } catch (error) {
       setMessageType("error");
